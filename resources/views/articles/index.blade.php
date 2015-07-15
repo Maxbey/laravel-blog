@@ -8,7 +8,7 @@
     @if(!$articles->isEmpty())
 
         @foreach($articles as $article)
-            <h1>{{ $article->title }}</h1>
+            <h1><a href="{{ action('ArticlesController@show', ['id' => $article->id]) }}">{{ $article->title }}</a></h1>
             <hr/>
             <p>{{ $article->body }}</p>
         @endforeach
