@@ -13,19 +13,28 @@ use App\Http\Requests\ArticleRequest;
 class ArticlesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Temporary!
+     * Only auth users can write and edit article
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['only' => ['create', 'edit']]);
+    }
+
+    /**
+     * Display all articles.
      *
      * @return Response
      */
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::latest('published_at')->published()->get();
 
         return view('articles.index')->with('articles', $articles);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new article.
      *
      * @return Response
      */
@@ -37,7 +46,7 @@ class ArticlesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created article in storage.
      *
      * @param  Request $request
      * @return Response
@@ -51,41 +60,49 @@ class ArticlesController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified article.
      *
      * @param  int $id
      * @return Response
      */
     public function show($id)
     {
-        //
+        $article = Article::published()->findOrFail($id);
+
+        return view('articles.show')->with('article', $article);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing article.
      *
      * @param  int $id
      * @return Response
      */
     public function edit($id)
     {
-        //
+        $article = Article::findOrFail($id);
+
+        return view('articles.edit')->with('article', $article);
+
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified article in storage.
      *
      * @param  Request $request
      * @param  int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(ArticleRequest $request, $id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $article->update($request->all());
+
+        return redirect('articles/' . $article->id);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified article from storage.
      *
      * @param  int $id
      * @return Response

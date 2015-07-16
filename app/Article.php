@@ -35,6 +35,18 @@ class Article extends Model
     protected $dates = ['published_at'];
 
     /**
+     * Article owned by user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
+
+
+    /**
      * Set the published_at attribute
      * @param $date
      */
@@ -54,13 +66,21 @@ class Article extends Model
     }
 
     /**
-     * Article owned by user
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Fetching only published articles
+     * @param $query
      */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+    public function scopePublished($query){
+        $query->where('published_at', '<=', Carbon::now());
     }
+
+    /**
+     * Fetching only unpublished articles
+     * @param $query
+     */
+    public function scopeUnPublished($query){
+        $query->where('published_at', '>', Carbon::now());
+    }
+
 
 
 }
