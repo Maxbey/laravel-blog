@@ -13,12 +13,12 @@ use App\Http\Requests\ArticleRequest;
 class ArticlesController extends Controller
 {
     /**
-     * Temporary!
-     * Only auth users can write and edit article
+     * Only admin can write and edit article
      */
     public function __construct()
     {
         $this->middleware('auth', ['only' => ['create', 'edit']]);
+        $this->middleware('admin', ['only' => ['create', 'edit']]);
     }
 
     /**

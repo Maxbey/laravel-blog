@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use App\Article;
+use App\Permission;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -26,7 +27,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['login', 'email', 'password'];
+    protected $fillable = ['login', 'permission_id', 'email', 'password'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -42,6 +43,29 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function articles()
     {
-       return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class);
+    }
+
+    /**
+     * Return user`s permission instance
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function permission()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Check whether the user is an administrator.
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        if ($this->permission->id === 1)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
