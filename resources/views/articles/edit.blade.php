@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', $article->title)
+@section('title', 'Edit ' . $article->title)
 @stop
 
 @section('content')

@@ -1,16 +1,18 @@
 @extends('layout')
 
-@section('title', 'Articles')
+@section('title', 'Blog')
 @stop
 
 @section('content')
-
+    <h1>Posts</h1>
+    <hr/>
+    
     @if(!$articles->isEmpty())
 
         @foreach($articles as $article)
             <h1><a href="{{ action('ArticlesController@show', ['id' => $article->id]) }}">{{ $article->title }}</a></h1>
-            <hr/>
             <p>{{ $article->body }}</p>
+            <hr/>
         @endforeach
 
     @else

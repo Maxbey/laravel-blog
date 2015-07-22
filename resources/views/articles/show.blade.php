@@ -11,7 +11,7 @@
         <h4>Tags:</h4>
         <ul>
             @foreach($tags as $tag)
-                <li>{{ $tag }}</li>
+                <li><a href="{{ action('TagsController@articles', ['tagName' => $tag]) }}">{{ $tag }}</a></li>
             @endforeach
         </ul>
     @else

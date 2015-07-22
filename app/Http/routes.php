@@ -1,6 +1,10 @@
 <?php
 
-Route::resource('articles', 'ArticlesController');
+Route::resource('blog', 'ArticlesController');
 
 Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
+
+Route::get('/', 'PagesController@index');
+
+Route::get('tag/{tags}', 'TagsController@articles');
