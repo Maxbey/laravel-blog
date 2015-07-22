@@ -20,6 +20,8 @@ class RedirectIfNotAdmin
             return $next($request);
         }
 
-        return back();
+        return back()->with([
+            'message' => 'No :)'
+        ]);
     }
 }

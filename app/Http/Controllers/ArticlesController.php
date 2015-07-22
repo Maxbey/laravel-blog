@@ -8,12 +8,15 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Article;
+use App\Tag;
 use App\Http\Requests\ArticleRequest;
 
 class ArticlesController extends Controller
 {
     /**
-     * Only admin can write and edit article
+     * Create a new articles controller instance
+     * Set the middleware.
+     * Only admin can write and edit articles.
      */
     public function __construct()
     {
@@ -41,8 +44,12 @@ class ArticlesController extends Controller
     public function create()
     {
         $article = new Article();
+        $allTags = Tag::lists('name', 'id');
 
-        return view('articles.create')->with('article', $article);
+        return view('articles.create')->with([
+            'article' => $article,
+            'allTags' => $allTags->toArray()
+        ]);
     }
 
     /**
@@ -53,7 +60,7 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        \Auth::user()->articles()->create($request->all());
+        $this->createArticle($request);
 
         return redirect('articles')->with([
             'message' => 'Article has been created'
@@ -69,8 +76,12 @@ class ArticlesController extends Controller
     public function show($id)
     {
         $article = Article::published()->findOrFail($id);
+        $tags = $article->tags()->lists('name');
 
-        return view('articles.show')->with('article', $article);
+        return view('articles.show')->with([
+            'article' => $article,
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -82,8 +93,12 @@ class ArticlesController extends Controller
     public function edit($id)
     {
         $article = Article::findOrFail($id);
+        $allTags = Tag::lists('name', 'id');
 
-        return view('articles.edit')->with('article', $article);
+        return view('articles.edit')->with([
+            'article' => $article,
+            'allTags' => $allTags->toArray()
+        ]);
 
     }
 
@@ -99,6 +114,9 @@ class ArticlesController extends Controller
         $article = Article::findOrFail($id);
         $article->update($request->all());
 
+        $tagIds = $request->input('tags');
+        $this->syncTags($article, $tagIds);
+
         return redirect('articles/' . $article->id);
     }
 
@@ -111,5 +129,32 @@ class ArticlesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Sync up the list of tags in the database
+     *
+     * @param Article $article
+     * @param array $tags
+     */
+    private function syncTags(Article $article, array $tags)
+    {
+        $article->tags()->sync($tags);
+
+    }
+
+    /**
+     * Save a new article.
+     * @param ArticleRequest $request
+     * @return Article
+     */
+    private function createArticle(ArticleRequest $request)
+    {
+        $article = \Auth::user()->articles()->create($request->all());
+        $tagIds = $request->input('tags');
+
+        $this->syncTags($article, $tagIds);
+
+        return $article;
     }
 }

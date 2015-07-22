@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-
+            $table->foreign('permission_id')->references('id')->on('permissions');
         });
     }
 

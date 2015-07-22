@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 use App\User;
+use App\Tag;
 
 class Article extends Model
 {
@@ -44,8 +45,6 @@ class Article extends Model
     }
 
 
-
-
     /**
      * Set the published_at attribute
      * @param $date
@@ -69,7 +68,8 @@ class Article extends Model
      * Fetching only published articles
      * @param $query
      */
-    public function scopePublished($query){
+    public function scopePublished($query)
+    {
         $query->where('published_at', '<=', Carbon::now());
     }
 
@@ -77,10 +77,28 @@ class Article extends Model
      * Fetching only unpublished articles
      * @param $query
      */
-    public function scopeUnPublished($query){
+    public function scopeUnPublished($query)
+    {
         $query->where('published_at', '>', Carbon::now());
     }
 
+    /**
+     * Get the tags associated with given article
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
+    /**
+     * Get a tag list associated with given article.
+     * @return array
+     */
+    public function getTagListAttribute()
+    {
+        return $this->tags()->lists('id');
+    }
 
 
 }
