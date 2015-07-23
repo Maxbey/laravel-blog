@@ -6,7 +6,7 @@
 @section('content')
     <h1>Posts</h1>
     <hr/>
-    
+
     @if(!$articles->isEmpty())
 
         @foreach($articles as $article)

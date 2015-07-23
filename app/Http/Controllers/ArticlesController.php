@@ -62,8 +62,8 @@ class ArticlesController extends Controller
     {
         $this->createArticle($request);
 
-        return redirect('articles')->with([
-            'message' => 'Article has been created'
+        return redirect('blog')->with([
+            'message' => 'Post has been created'
         ]);
     }
 
@@ -152,9 +152,27 @@ class ArticlesController extends Controller
     {
         $article = \Auth::user()->articles()->create($request->all());
         $tagIds = $request->input('tags');
+       // $this->checkTags($tagIds);
 
         $this->syncTags($article, $tagIds);
 
         return $article;
     }
+
+    /**
+     * Check request tags.
+     * If given tag doesn`t contained in database, create it.
+     * @param $sentTags
+     */
+    /*private function checkTags($sentTags)
+    {
+        $availableTags = Tag::lists('id');
+        foreach($sentTags as $tag)
+        {
+            if(!$availableTags->contains((int) $tag))
+            {
+                Tag::create('name' => $sentTags);
+            }
+        }
+    }*/
 }

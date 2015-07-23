@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 use App\Tag;
+use App\Comment;
 
 class Article extends Model
 {
@@ -44,6 +45,19 @@ class Article extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the tags associated with given article
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->withTimestamps();
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     /**
      * Set the published_at attribute
@@ -80,15 +94,6 @@ class Article extends Model
     public function scopeUnPublished($query)
     {
         $query->where('published_at', '>', Carbon::now());
-    }
-
-    /**
-     * Get the tags associated with given article
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function tags()
-    {
-        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
     /**

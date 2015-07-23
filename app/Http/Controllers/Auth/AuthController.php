@@ -27,7 +27,7 @@ class AuthController extends Controller
      * After login redirect to articles page
      * @var string
      */
-    protected $redirectTo = '/articles';
+    protected $redirectTo = '/';
 
     /**
      * Login path

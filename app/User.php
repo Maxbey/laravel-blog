@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 use App\Article;
 use App\Permission;
+use App\Comment;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -44,6 +45,15 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    /**
+     * A user can have many comments
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     /**

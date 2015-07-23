@@ -9,7 +9,7 @@
 </head>
 <body>
     @include('main.navigation')
-    <div class="container ">
+    <div class="container center-block">
         @include('flash.messages')
 
         @yield('content')
