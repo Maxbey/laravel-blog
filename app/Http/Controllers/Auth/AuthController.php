@@ -30,6 +30,12 @@ class AuthController extends Controller
     protected $redirectTo = '/';
 
     /**
+     * Redirect after logout.
+     * @var string
+     */
+    protected $redirectAfterLogout = '/';
+
+    /**
      * Login path
      * @var string
      */

@@ -18,7 +18,8 @@
            @if(Auth::check())
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">{{ Auth::user()->login }}</a></li>
+                <li><a href="{{ action('UsersController@show', ['login' => Auth::user()->login]) }}">{{ Auth::user()->login }}</a></li>
+                <li><a href="{{ action('Auth\AuthController@getLogout') }}">Logout</a></li>
             </ul>
 
             @endif

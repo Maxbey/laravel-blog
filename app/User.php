@@ -66,6 +66,17 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * Query scope for select user by given login.
+     *
+     * @param $query
+     * @param $login
+     */
+    public function scopeByLogin($query, $login)
+    {
+        $query->where('login', '=', $login);
+    }
+
+    /**
      * Check whether the user is an administrator.
      * @return bool
      */

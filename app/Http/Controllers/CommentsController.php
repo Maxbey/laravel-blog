@@ -17,7 +17,7 @@ class CommentsController extends Controller
     {
         $comment = $this->createComment($request);
 
-        return redirect('blog/' . $request->article_id . '#' . 'comment_' . $comment->id)->with([
+        return redirect('blog/' . $request->article_id)->with([
             'message' => 'Comment has been created'
         ]);
     }

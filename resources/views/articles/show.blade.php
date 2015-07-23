@@ -8,7 +8,7 @@
     @if(!$tags->isEmpty())
             <ul class="tag-list list-inline">
                 @foreach($tags as $tag)
-                    <li><a href="{{ action('TagsController@articles', ['tagName' => $tag]) }}">{{ $tag }}</a></li>
+                    <li><a href="{{ action('TagsController@articles', ['tagName' => $tag]) }}">#{{ $tag }}</a></li>
                 @endforeach
             </ul>
         @else
@@ -23,15 +23,16 @@
         <p>{{ $article->body }}</p>
     </div>
     <div class="col-md-8">
-        <h4>Comments</h4>
-        <hr/>
+        <h4>Comments:</h4>
         @if(!$article->comments->isEmpty())
             @foreach($article->comments as $comment)
                 <div class="comment" id="{{'comment_'. $comment->id }}">
                     <h4>{{ $comment->author }}</h4>
-                    <p>{{ $comment->body }}</p>
-                    <hr/>
+                    <blockquote>
+                        <p>{{ $comment->body }}</p>
+                    </blockquote>
                 </div>
+
             @endforeach
         @else
             <h4>No comments yet</h4>

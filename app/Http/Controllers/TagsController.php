@@ -13,7 +13,7 @@ class TagsController extends Controller
     public function articles($tagName)
     {
         $tag = Tag::where('name', '=', $tagName)->get();
-        $articles = $tag[0]->articles;
+        $articles = $tag[0]->articles()->published()->get();
 
         return view('articles.index')->with('articles', $articles);
     }
