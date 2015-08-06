@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <title>@yield('title')</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css"/>
+{!! Html::script('vendor/jquery/dist/jquery.min.js'); !!}
+{!! Html::script('vendor/select2/dist/js/select2.min.js'); !!}
+{!! Html::script('vendor/bootstrap/dist/js/bootstrap.min.js'); !!}
+
+{!! Html::style('vendor/select2/dist/css/select2.min.css') !!}
+{!! Html::style('vendor/bootstrap/dist/css/bootstrap.min.css') !!}
+
 <link rel="stylesheet" href="{{ elixir('css/app.css') }}"/>
 </head>
 <body>
@@ -14,9 +19,6 @@
 
         @yield('content')
     </div>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <script>
         $(function(){
             $('div.alert').delay(2000).fadeOut();

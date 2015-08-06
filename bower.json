@@ -1,0 +1,15 @@
+{
+  "name": "laravel-blog",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Maxbey/laravel-blog",
+  "authors": [
+    "Maxbey <maximbeiner@gmail.com>"
+  ],
+  "description": "A simple example of a blog written on the web framework laravel",
+  "license": "No",
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
+    "select2": "~4.0.0"
+  }
+}
