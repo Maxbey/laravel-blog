@@ -1,21 +1,58 @@
-body {
-  padding-top: 70px;
+.comment a{
+    color: darksalmon;
+}
+.comment a:hover{
+    text-decoration: none;
+    color: burlywood;
 }
 
-.tag-list{
-   display: inline-block;
+body{
+    background:#fff;
+    padding-top: 70px;
 }
 
-.post-body{
-  position: relative;
-  margin-top: 30px;
+header h1{
+    font-size: 30px;
+}
+
+nav p a{
+    color: darkgray;
+}
+
+.article{
+    margin-top: 20px;
+    background:#fff;
+    box-shadow: 0 1px 15px rgba(0,0,0,.2);
+    padding: 15px;
+}
+
+.article {
+    font-size: 18px;
+}
+
+.comments{
+    margin-top: 30px;
 }
 
 .comment{
-  margin-top: 60px;
+    margin-top: 35px;
 }
 
-.comment:first-child{
-  margin-top: 20px;
+.comment p{
+    font-size: 17px;
+    margin-top: 30px;
+}
+
+.comment h4{
+    margin-top: 20px;
+    font-family: sans-serif;
+}
+
+.comment p{
+    font-family: Arial;
+}
+
+.text{
+    margin-top: 10px;
 }
 

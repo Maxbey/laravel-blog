@@ -4,9 +4,11 @@
 @stop
 
 @section('content')
-    <h1>{{ $article->title }}</h1>
+    <header>
+         <h1>{{ $article->title }}</h1>
+    </header>
     @if(!$tags->isEmpty())
-            <ul class="tag-list list-inline">
+            <ul class="list-inline">
                 @foreach($tags as $tag)
                     <li><a href="{{ action('TagsController@articles', ['tagName' => $tag]) }}">#{{ $tag }}</a></li>
                 @endforeach
@@ -17,31 +19,27 @@
         @endif
 
         @include('errors.list')
-
-    <hr/>
-    <div class="post-body">
-        <p>{{ $article->body }}</p>
-    </div>
+    <content>
+       <div class="article col-md-10 center-block"><p>{{ $article->body }}</p></div>
+    </content>
     <div class="col-md-8">
-        <h4>Comments:</h4>
+       <div class="comments">
+        <h3>Comments:</h3>
         @if(!$article->comments->isEmpty())
             @foreach($article->comments as $comment)
                 <div class="comment" id="{{'comment_'. $comment->id }}">
-                    <h4>{{ $comment->author }}</h4>
-                    <blockquote>
+                    <h4><a href="">{{ $comment->author }}</a></h4>
                         <p>{{ $comment->body }}</p>
-                    </blockquote>
                 </div>
-
             @endforeach
         @else
             <h4>No comments yet</h4>
         @endif
 
-
+        </div>
     </div>
     <div class="col-md-8">
-        <h4>Add a new Comment</h4>
+        <h3>Add a new Comment</h3>
         <hr/>
         {!! Form::open(['action' => 'CommentsController@store', 'method' => 'POST']) !!}
             @include ('forms.comment', ['submitButton' => 'Add Comment'])

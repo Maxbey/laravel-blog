@@ -10,6 +10,7 @@
   "dependencies": {
     "bootstrap": "~3.3.5",
     "jquery": "~2.1.4",
-    "select2": "~4.0.0"
+    "select2": "~4.0.0",
+    "select2-bootstrap-theme": "~0.1.0-beta.4"
   }
 }

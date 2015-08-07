@@ -8,8 +8,10 @@
     <hr/>
     @include('errors.list')
 
-    {!! Form::model($article, ['action' => 'ArticlesController@store']) !!}
-        @include('forms.article', ['submitButton' => 'Add Article'])
-    {!! Form::close() !!}
+    <div class="col-md-10">
+        {!! Form::model($article, ['action' => 'ArticlesController@store']) !!}
+            @include('forms.article', ['submitButton' => 'Add Article'])
+        {!! Form::close() !!}
+    </div>
 
 @stop
