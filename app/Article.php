@@ -24,9 +24,9 @@ class Article extends Model
      */
     protected $fillable = [
         'user_id',
+        'excerpt',
         'title',
         'body',
-        'excerpt',
         'published_at'
     ];
 

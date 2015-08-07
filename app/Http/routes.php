@@ -1,6 +1,9 @@
 <?php
 
-Route::resource('blog', 'ArticlesController');
+Route::group(['prefix' => 'blog'], function(){
+    Route::resource('articles', 'ArticlesController');
+});
+
 Route::resource('comments', 'CommentsController');
 Route::resource('users', 'UsersController');
 
