@@ -27,4 +27,9 @@ class Tag extends Model
     {
         return $this->belongsToMany(Article::class);
     }
+
+    public function setNameAttribute($tag)
+    {
+        $this->attributes['name'] = str_slug($tag, '_');
+    }
 }
