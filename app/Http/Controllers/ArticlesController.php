@@ -115,6 +115,12 @@ class ArticlesController extends Controller
         $article->update($request->all());
 
         $tagIds = $request->input('tags');
+
+        if(is_null($tagIds))
+        {
+            $tagIds = [];
+        }
+
         $this->syncTags($article, $tagIds);
 
         return redirect('blog' . $article->id);

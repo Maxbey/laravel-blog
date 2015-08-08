@@ -13,13 +13,15 @@
             <th>Permissions</th>
             <th>Login</th>
             <th>Email</th>
+            <th>Delete</th>
         </tr>
             @foreach($users as $user)
             <tr>
                 <td>{{ $user->id }}</td>
-                <td>god</td>
+                <td>{{ $user->permission->group_name }}</td>
                 <td><a href="{{ action('UsersController@show', ['login' => $user->login]) }}">{{ $user->login }}</a></td>
                 <td>{{ $user->email }}</td>
+                <td><a href="">Delete</a></td>
             </tr>
             @endforeach
         </table>

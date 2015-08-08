@@ -10,7 +10,7 @@
     @if(!$tags->isEmpty())
             <ul class="list-inline">
                 @foreach($tags as $tag)
-                    <li><a href="{{ action('TagsController@articles', ['tagName' => $tag]) }}">#{{ $tag }}</a></li>
+                    <li><a href="{{ action('TagsController@articles', ['tagName' => $tag]) }}">#{{ str_replace('_', ' ', $tag) }}</a></li>
                 @endforeach
             </ul>
         @else

@@ -17,13 +17,16 @@ class CommentsController extends Controller
     {
         $comment = $this->createComment($request);
 
-        return redirect('blog/' . $request->article_id)->with([
+        return redirect('blog/articles/' . $request->article_id)->with([
             'message' => 'Comment has been created'
         ]);
     }
 
     private function createComment($request)
     {
+
+
+
         if(\Auth::check())
         {
             $comment = \Auth::user()->comments()->create($request->all());

@@ -10,9 +10,10 @@
     @if(!$articles->isEmpty())
 
         @foreach($articles as $article)
-            <h1><a href="{{ action('ArticlesController@show', ['id' => $article->id]) }}">{{ $article->title }}</a></h1>
-            <p>{{ $article->body }}</p>
-            <hr/>
+            <h2><a href="{{ action('ArticlesController@show', ['id' => $article->id]) }}">{{ $article->title }}</a></h2>
+            <blockquote>
+                <p>{{ $article->excerpt }}</p>
+            </blockquote>
         @endforeach
 
     @else

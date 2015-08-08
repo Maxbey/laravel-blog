@@ -62,7 +62,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function permission()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Permission::class);
     }
 
     /**

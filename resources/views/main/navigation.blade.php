@@ -19,6 +19,9 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ action('UsersController@show', ['login' => Auth::user()->login]) }}">{{ Auth::user()->login }}</a></li>
+                @if(Auth::user()->isAdmin())
+                    <li><a href="#">Admin Panel</a></li>
+                @endif
                 <li><a href="{{ action('Auth\AuthController@getLogout') }}">Logout</a></li>
             </ul>
 
