@@ -11,15 +11,22 @@ use App\Article;
 use App\Tag;
 use App\Http\Requests\ArticleRequest;
 
+use App\Repositories\ArticlesRepository\ArticlesRepository;
+
 class ArticlesController extends Controller
 {
+    private $repository;
+
     /**
-     * Create a new articles controller instance
+     * Set the repository.
      * Set the middleware.
-     * Only admin can write and edit articles.
+     *
+     * @param ArticlesRepository $repository
      */
-    public function __construct()
+    public function __construct(ArticlesRepository $repository)
     {
+        $this->repository = $repository;
+
         $this->middleware('auth', ['only' => ['create', 'edit']]);
         $this->middleware('admin', ['only' => ['create', 'edit']]);
     }
@@ -60,9 +67,12 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        $this->createArticle($request);
+        $attributes = $request->all();
+        $tags = $request->input('tags');
 
-        return redirect('blog')->with([
+        $this->repository->create($attributes, $tags);
+
+        return redirect('blog/articles')->with([
             'message' => 'Post has been created'
         ]);
     }
@@ -111,19 +121,12 @@ class ArticlesController extends Controller
      */
     public function update(ArticleRequest $request, $id)
     {
-        $article = Article::findOrFail($id);
-        $article->update($request->all());
+        $input = $request->all();
+        $tags = $request->input('tags');
 
-        $tagIds = $request->input('tags');
+        $article = $this->repository->update($id, $input, (array)$tags);
 
-        if(is_null($tagIds))
-        {
-            $tagIds = [];
-        }
-
-        $this->syncTags($article, $tagIds);
-
-        return redirect('blog' . $article->id);
+        return redirect('blog/articles/' . $article->id);
     }
 
     /**
@@ -136,49 +139,4 @@ class ArticlesController extends Controller
     {
         //
     }
-
-    /**
-     * Sync up the list of tags in the database
-     *
-     * @param Article $article
-     * @param array $tags
-     */
-    private function syncTags(Article $article, array $tags)
-    {
-        $article->tags()->sync($tags);
-
-    }
-
-    /**
-     * Save a new article.
-     * @param ArticleRequest $request
-     * @return Article
-     */
-    private function createArticle(ArticleRequest $request)
-    {
-        $article = \Auth::user()->articles()->create($request->all());
-        $tagIds = $request->input('tags');
-       // $this->checkTags($tagIds);
-
-        $this->syncTags($article, $tagIds);
-
-        return $article;
-    }
-
-    /**
-     * Check request tags.
-     * If given tag doesn`t contained in database, create it.
-     * @param $sentTags
-     */
-    /*private function checkTags($sentTags)
-    {
-        $availableTags = Tag::lists('id');
-        foreach($sentTags as $tag)
-        {
-            if(!$availableTags->contains((int) $tag))
-            {
-                Tag::create('name' => $sentTags);
-            }
-        }
-    }*/
 }
