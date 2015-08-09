@@ -3,14 +3,25 @@
 namespace App;
 
 use Carbon\Carbon;
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 use App\Tag;
 use App\Comment;
 
-class Article extends Model
+class Article extends Model implements SluggableInterface
 {
+    use SluggableTrait;
+
+    /** Sluggable column.
+     * @var array
+     */
+    protected $sluggable = [
+        'build_from' => 'title',
+        'save_to'    => 'slug',
+    ];
 
     /**
      * Table name

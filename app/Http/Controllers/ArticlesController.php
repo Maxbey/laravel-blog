@@ -86,7 +86,7 @@ class ArticlesController extends Controller
     public function show($id)
     {
         $article = Article::published()->findOrFail($id);
-        $tags = $article->tags()->lists('name');
+        $tags = $article->tags()->lists('name', 'slug');
 
         return view('articles.show')->with([
             'article' => $article,
@@ -137,6 +137,6 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Article::destroy($id);
     }
 }

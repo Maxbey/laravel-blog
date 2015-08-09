@@ -2,11 +2,23 @@
 
 namespace App;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Article;
 
-class Tag extends Model
+class Tag extends Model implements SluggableInterface
 {
+    use SluggableTrait;
+
+    /** Sluggable column.
+     * @var array
+     */
+    protected $sluggable = [
+        'build_from' => 'name',
+        'save_to'    => 'slug',
+    ];
+
     /**
      * Table name.
      * @var string
@@ -26,10 +38,5 @@ class Tag extends Model
     public function articles()
     {
         return $this->belongsToMany(Article::class);
-    }
-
-    public function setNameAttribute($tag)
-    {
-        $this->attributes['name'] = str_slug($tag, '_');
     }
 }

@@ -12,8 +12,8 @@ class TagsController extends Controller
 {
     public function articles($tagName)
     {
-        $tag = Tag::where('name', '=', $tagName)->get();
-        $articles = $tag[0]->articles()->published()->get();
+        $tag = Tag::findBySlug($tagName);
+        $articles = $tag->articles()->published()->get();
 
         return view('articles.index')->with('articles', $articles);
     }

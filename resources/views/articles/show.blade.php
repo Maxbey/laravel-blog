@@ -9,12 +9,12 @@
     </header>
     @if(!$tags->isEmpty())
             <ul class="list-inline">
-                @foreach($tags as $tag)
-                    <li><a href="{{ action('TagsController@articles', ['tagName' => $tag]) }}">#{{ str_replace('_', ' ', $tag) }}</a></li>
+                @foreach($tags as $slug => $tag)
+                    <li><a href="{{ action('TagsController@articles', ['tagName' => $slug]) }}">#{{ $tag }}</a></li>
                 @endforeach
             </ul>
         @else
-            <p><b>This article doesn't have tags</b><p>
+            <p><b>This article doesn't have any tag</b><p>
 
         @endif
 
