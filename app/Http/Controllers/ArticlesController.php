@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ArticlesService\ArticlesService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,21 +12,18 @@ use App\Article;
 use App\Tag;
 use App\Http\Requests\ArticleRequest;
 
-use App\Repositories\ArticlesRepository\ArticlesRepository;
-
 class ArticlesController extends Controller
 {
-    private $repository;
+    private $articlesService;
 
     /**
-     * Set the repository.
+     * Set the service.
      * Set the middleware.
-     *
-     * @param ArticlesRepository $repository
+     * @param ArticlesService $service
      */
-    public function __construct(ArticlesRepository $repository)
+    public function __construct(ArticlesService $service)
     {
-        $this->repository = $repository;
+        $this->articlesService = $service;
 
         $this->middleware('auth', ['only' => ['create', 'edit']]);
         $this->middleware('admin', ['only' => ['create', 'edit']]);
@@ -51,11 +49,11 @@ class ArticlesController extends Controller
     public function create()
     {
         $article = new Article();
-        $allTags = Tag::lists('name', 'id');
+        $allTags = Tag::lists('name', 'name')->toArray();
 
         return view('articles.create')->with([
             'article' => $article,
-            'allTags' => $allTags->toArray()
+            'allTags' => $allTags
         ]);
     }
 
@@ -70,15 +68,15 @@ class ArticlesController extends Controller
         $attributes = $request->all();
         $tags = $request->input('tags');
 
-        $this->repository->create($attributes, $tags);
+        $this->articlesService->create($attributes, (array)$tags);
 
         return redirect('blog/articles')->with([
-            'message' => 'Post has been created'
+            'message' => 'Article has been created'
         ]);
     }
 
     /**
-     * Display the specified article.
+     * Display the article.
      *
      * @param  int $id
      * @return Response
@@ -103,17 +101,17 @@ class ArticlesController extends Controller
     public function edit($id)
     {
         $article = Article::findOrFail($id);
-        $allTags = Tag::lists('name', 'id');
+        $allTags = Tag::lists('name', 'name')->toArray();
 
         return view('articles.edit')->with([
             'article' => $article,
-            'allTags' => $allTags->toArray()
+            'allTags' => $allTags
         ]);
 
     }
 
     /**
-     * Update the specified article in storage.
+     * Update the article in storage.
      *
      * @param  Request $request
      * @param  int $id
@@ -124,13 +122,15 @@ class ArticlesController extends Controller
         $input = $request->all();
         $tags = $request->input('tags');
 
-        $article = $this->repository->update($id, $input, (array)$tags);
+        $article = $this->articlesService->update($id, $input, (array)$tags);
 
-        return redirect('blog/articles/' . $article->id);
+        return redirect('blog/articles/' . $article->id)->with([
+            'message' => 'Article has been updated'
+        ]);
     }
 
     /**
-     * Remove the specified article from storage.
+     * Remove the article from storage.
      *
      * @param  int $id
      * @return Response

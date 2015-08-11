@@ -21,7 +21,6 @@ class ArticlesRepository implements IArticlesRepository
     public function create(array $attributes, array $tagIds)
     {
         $article = \Auth::user()->articles()->create($attributes);
-
         $this->syncTags($article, $tagIds);
 
         return $article;

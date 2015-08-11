@@ -27,7 +27,8 @@
             $('.select2').select2({
                 theme: "bootstrap",
                 width:'100%',
-                placeholder: "Select the tags"
+                placeholder: "Select the tags",
+                tags: true
             });
         });
     </script>
