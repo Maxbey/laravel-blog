@@ -14,18 +14,37 @@
             <li><a href="{{ action('PagesController@index') }}">Home</a></li>
             <li><a href="{{ action('ArticlesController@index') }}">Blog</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
 
-           @if(Auth::check())
+            @if(Auth::check())
 
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ action('UsersController@show', ['login' => Auth::user()->login]) }}">{{ Auth::user()->login }}</a></li>
+                <li>
+                    <a href="{{ action('UsersController@show', ['login' => Auth::user()->login]) }}">
+                        {{ Auth::user()->login }}
+                    </a>
+                </li>
+
                 @if(Auth::user()->isAdmin())
-                    <li><a href="#">Admin Panel</a></li>
+
+                    <li>
+                        <a href="{{ action('AdminController@index') }}">Admin Panel</a>
+                    </li>
+
                 @endif
-                <li><a href="{{ action('Auth\AuthController@getLogout') }}">Logout</a></li>
-            </ul>
+
+                <li>
+                    <a href="{{ action('Auth\AuthController@getLogout') }}">Sign out</a>
+                </li>
+
+            @else
+
+                <li>
+                    <a href="{{ action('Auth\AuthController@getLogin') }}">Sign in</a>
+                </li>
 
             @endif
+
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\SluggableInterface;
 use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\User;
 use App\Tag;
@@ -14,6 +15,7 @@ use App\Comment;
 class Article extends Model implements SluggableInterface
 {
     use SluggableTrait;
+    use SoftDeletes;
 
     /** Sluggable column.
      * @var array
@@ -45,7 +47,7 @@ class Article extends Model implements SluggableInterface
      * Carbon instances
      * @var array
      */
-    protected $dates = ['published_at'];
+    protected $dates = ['published_at', 'deleted_at'];
 
     /**
      * Article owned by user
@@ -114,6 +116,12 @@ class Article extends Model implements SluggableInterface
     public function getTagListAttribute()
     {
         return $this->tags()->lists('name');
+    }
+
+
+    public function isPublished()
+    {
+        return $this->published_at < Carbon::now() ? true : false;
     }
 
 

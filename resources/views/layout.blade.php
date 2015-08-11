@@ -23,7 +23,7 @@
     </div>
     <script>
         $(function(){
-            $('div.alert').delay(2000).fadeOut();
+            $('div.alert-success').delay(2000).fadeOut();
             $('.select2').select2({
                 theme: "bootstrap",
                 width:'100%',

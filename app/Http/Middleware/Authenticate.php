@@ -39,7 +39,7 @@ class Authenticate
                 return response('Unauthorized.', 401);
             } else {
                 return back()->with([
-                    'message' => 'No :)'
+                    'error-message' => 'Only authorized users can visit this part'
                 ]);;
             }
         }

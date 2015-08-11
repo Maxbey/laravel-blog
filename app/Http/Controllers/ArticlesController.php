@@ -25,8 +25,8 @@ class ArticlesController extends Controller
     {
         $this->articlesService = $service;
 
-        $this->middleware('auth', ['only' => ['create', 'edit']]);
-        $this->middleware('admin', ['only' => ['create', 'edit']]);
+        $this->middleware('auth', ['only' => ['create', 'edit', 'destroy', 'restore']]);
+        $this->middleware('admin', ['only' => ['create', 'edit', 'destroy', 'restore']]);
     }
 
     /**
@@ -71,7 +71,7 @@ class ArticlesController extends Controller
         $this->articlesService->create($attributes, (array)$tags);
 
         return redirect('blog/articles')->with([
-            'message' => 'Article has been created'
+            'success-message' => 'Article has been created'
         ]);
     }
 
@@ -100,7 +100,7 @@ class ArticlesController extends Controller
      */
     public function edit($id)
     {
-        $article = Article::findOrFail($id);
+        $article = Article::withTrashed()->findOrFail($id);
         $allTags = Tag::lists('name', 'name')->toArray();
 
         return view('articles.edit')->with([
@@ -123,9 +123,10 @@ class ArticlesController extends Controller
         $tags = $request->input('tags');
 
         $article = $this->articlesService->update($id, $input, (array)$tags);
+        $url = $article->isPublished() ? 'blog/articles/' . $article->id : 'admin/articles_control';
 
-        return redirect('blog/articles/' . $article->id)->with([
-            'message' => 'Article has been updated'
+        return redirect($url)->with([
+            'success-message' => 'Article has been updated'
         ]);
     }
 
@@ -138,5 +139,19 @@ class ArticlesController extends Controller
     public function destroy($id)
     {
         Article::destroy($id);
+
+        return redirect('admin/articles_control')->with([
+            'success-message' => 'Article has been deleted'
+        ]);
+    }
+
+    public function restore($id)
+    {
+        $article = Article::onlyTrashed()->findOrFail($id);
+        $article->restore();
+
+        return redirect('admin/articles_control')->with([
+            'success-message' => 'Article has been restored'
+        ]);
     }
 }

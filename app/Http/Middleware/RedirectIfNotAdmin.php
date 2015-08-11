@@ -21,7 +21,7 @@ class RedirectIfNotAdmin
         }
 
         return back()->with([
-            'message' => 'No :)'
+            'error-message' => 'Only the administrator can visit this part'
         ]);
     }
 }

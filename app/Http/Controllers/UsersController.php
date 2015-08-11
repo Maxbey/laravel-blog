@@ -13,20 +13,7 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware('admin');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        $users = User::all();
-
-        return view('users.index')->with('users', $users);
+        //
     }
 
     /**
@@ -61,29 +48,6 @@ class UsersController extends Controller
         $user = User::byLogin($login)->get();
 
         return view('users.show')->with('user', $user[0]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
