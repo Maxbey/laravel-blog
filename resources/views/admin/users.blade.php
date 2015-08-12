@@ -22,7 +22,7 @@
                     <td>{{ $user->permission->group_name }}</td>
                     <td><a href="{{ action('UsersController@show', ['login' => $user->login]) }}">{{ $user->login }}</a></td>
                     <td>{{ $user->email }}</td>
-                    @if(!Auth::user()->id === $user->id)
+                    @if(!Auth::user()->isAdmin())
                         <td><a href="">Delete</a></td>
                     @else
                         <td></td>

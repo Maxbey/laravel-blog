@@ -12,7 +12,7 @@ Route::group(['prefix' => 'admin'], function(){
 
     Route::group(['prefix' => 'users_control'], function(){
         Route::get('/', 'AdminController@usersControl');
-        Route::resource('users', 'UsersController');
+        Route::resource('users', 'UsersController', ['only' => ['create', 'store', 'destroy']]);
     });
 
     Route::group(['prefix' => 'articles_control'], function(){

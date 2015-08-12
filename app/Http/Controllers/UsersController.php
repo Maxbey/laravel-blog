@@ -38,19 +38,6 @@ class UsersController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($login)
-    {
-        $user = User::byLogin($login)->get();
-
-        return view('users.show')->with('user', $user[0]);
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

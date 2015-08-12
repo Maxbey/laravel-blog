@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -11,10 +13,13 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use App\Article;
 use App\Permission;
 use App\Comment;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, SluggableInterface
 {
     use Authenticatable, CanResetPassword;
+    use SluggableTrait;
+    use SoftDeletes;
 
     /**
      * The database table used by the model.
@@ -36,6 +41,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /** Sluggable column.
+     * @var array
+     */
+    protected $sluggable = [
+        'build_from' => 'login',
+        'save_to'    => 'slug',
+    ];
+
+    /**
+     * Carbon instances
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * A user can have many articles
@@ -63,17 +82,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function permission()
     {
         return $this->belongsTo(Permission::class);
-    }
-
-    /**
-     * Query scope for select user by given login.
-     *
-     * @param $query
-     * @param $login
-     */
-    public function scopeByLogin($query, $login)
-    {
-        $query->where('login', '=', $login);
     }
 
     /**
