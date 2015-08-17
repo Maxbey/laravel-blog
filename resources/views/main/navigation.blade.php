@@ -19,8 +19,8 @@
             @if(Auth::check())
 
                 <li>
-                    <a href="{{ action('UsersController@show', ['login' => Auth::user()->login]) }}">
-                        {{ Auth::user()->login }}
+                    <a href="{{ action('ProfileController@index') }}">
+                        Profile
                     </a>
                 </li>
 

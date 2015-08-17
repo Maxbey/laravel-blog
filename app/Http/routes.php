@@ -1,5 +1,22 @@
 <?php
 
+
+Route::get('/', 'PagesController@index');
+
+Route::resource('comments', 'CommentsController');
+
+Route::get('profile', 'ProfileController@index');
+
+
+
+Route::group(['prefix' => 'auth'], function(){
+    Route::get('login', 'Auth\AuthController@getLogin');
+    Route::get('logout', 'Auth\AuthController@getLogout');
+
+    Route::post('login', 'Auth\AuthController@postLogin');
+    Route::post('register', 'Auth\AuthController@postRegister');
+});
+
 Route::group(['prefix' => 'blog'], function(){
     Route::get('/', 'ArticlesController@index');
     Route::resource('articles', 'ArticlesController', ['only' => ['show']]);
@@ -26,12 +43,3 @@ Route::group(['prefix' => 'admin'], function(){
 
 });
 
-
-
-Route::resource('comments', 'CommentsController');
-
-Route::get('login', 'Auth\AuthController@getLogin');
-Route::post('login', 'Auth\AuthController@postLogin');
-Route::get('logout', 'Auth\AuthController@getLogout');
-
-Route::get('/', 'PagesController@index');

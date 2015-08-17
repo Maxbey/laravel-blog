@@ -71,9 +71,11 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'login' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'login' => 'required|min:3',
+            'email' => 'required|email',
+            'permissions_id' => 'required',
+            'password' => 'required|min:6|same:password_confirmation',
+            'password_confirmation' => 'required|min:6|same:password'
         ]);
     }
 }
