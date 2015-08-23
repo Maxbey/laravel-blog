@@ -70,7 +70,7 @@ class ArticlesController extends Controller
 
         $this->articlesService->create($attributes, (array)$tags);
 
-        return redirect('blog/articles')->with([
+        return redirect('blog')->with([
             'success-message' => 'Article has been created'
         ]);
     }

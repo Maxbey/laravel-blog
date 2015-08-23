@@ -28,8 +28,17 @@
         @if(!$article->comments->isEmpty())
             @foreach($article->comments as $comment)
                 <div class="comment" id="{{'comment_'. $comment->id }}">
-                    <h4><a href="">{{ $comment->author }}</a></h4>
-                        <p>{{ $comment->body }}</p>
+                    <div class="comment-head">
+                        <h4>{{ $comment->author }}
+                         <small>{{ $comment->created_at->format('m-d-y') }} - {{ $comment->created_at->format('H-i-s') }}</small>
+                        </h4>
+                    </div>
+                    <p>{{ $comment->body }}</p>
+                    @if(Auth::check())
+                        @if($comment->byUser() && Auth::user()->id == $comment->user->id)
+                            <a href="{{ action('CommentsController@edit', ['id' => $comment->id]) }}">Edit</a>
+                        @endif
+                    @endif
                 </div>
             @endforeach
         @else
@@ -39,10 +48,10 @@
         </div>
     </div>
     <div class="col-md-8">
-        <h3>Add a new Comment</h3>
         <hr/>
-        {!! Form::open(['action' => 'CommentsController@store', 'method' => 'POST']) !!}
-            @include ('forms.comment', ['submitButton' => 'Add Comment'])
-        {!! Form::close() !!}
-    </div>
+                  <h3>Add a new Comment</h3>
+                  {!! Form::open(['action' => ['CommentsController@store', $article->id], 'method' => 'POST']) !!}
+                      @include ('forms.comment', ['submitButton' => 'Add Comment'])
+                  {!! Form::close() !!}
+              </div>
 @stop

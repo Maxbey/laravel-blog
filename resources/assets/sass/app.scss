@@ -1,10 +1,4 @@
-.comment a{
-    color: darksalmon;
-}
-.comment a:hover{
-    text-decoration: none;
-    color: burlywood;
-}
+
 
 body{
     background:#fff;
@@ -34,22 +28,18 @@ nav p a{
     margin-top: 30px;
 }
 
-.comment{
+.comment-head{
     margin-top: 35px;
+}
+
+.comment-head h4{
+  color: darksalmon;
+  display: inline-block;
 }
 
 .comment p{
     font-size: 17px;
-    margin-top: 30px;
-}
-
-.comment h4{
     margin-top: 20px;
-    font-family: sans-serif;
-}
-
-.comment p{
-    font-family: Arial;
 }
 
 .text{

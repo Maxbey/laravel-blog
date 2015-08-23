@@ -28,7 +28,7 @@
                     <td><a href="#">{{ $user->login }}</a></td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->created_at }}</td>
-                    @if(!Auth::user()->isAdmin())
+                    @if(Auth::user()->id != $user->id)
                         <td><a href="">Delete</a></td>
                     @else
                         <td></td>

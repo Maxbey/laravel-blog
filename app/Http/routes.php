@@ -3,11 +3,12 @@
 
 Route::get('/', 'PagesController@index');
 
-Route::resource('comments', 'CommentsController');
+Route::group(['prefix' => 'im'], function(){
+    Route::get('/', 'ProfileController@index');
 
-Route::get('profile', 'ProfileController@index');
-
-
+    Route::post('comments/{id}', 'CommentsController@store');
+    Route::resource('comments', 'CommentsController', ['only' => ['edit', 'update', 'destroy']]);
+});
 
 Route::group(['prefix' => 'auth'], function(){
     Route::get('login', 'Auth\AuthController@getLogin');

@@ -1,5 +1,3 @@
-    {!! Form::hidden('article_id', $article->id) !!}
-
 <div class="form-group">
     {!! Form::label('author', 'Author:') !!}
     @if(\Auth::check())
