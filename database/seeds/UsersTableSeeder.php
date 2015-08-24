@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             'login' => 'admin',
             'permission_id' => 1,
             'email' => 'admin_email@admin_email.com',
-            'password' => bcrypt('secret')
+            'password' => 'secret'
         ]);
     }
 }

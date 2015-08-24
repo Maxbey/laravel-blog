@@ -39,7 +39,7 @@ class AuthController extends Controller
      * Login path
      * @var string
      */
-    protected $loginPath = '/login';
+    protected $loginPath = 'auth/login';
 
     /**
      * Login username to be used by the controller.

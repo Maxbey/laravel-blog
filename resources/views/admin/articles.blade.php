@@ -37,7 +37,7 @@
                     <td><a href="{{ action('ArticlesController@edit', ['id' => $article->id]) }}">Edit</a></td>
                     <td>
                         @if(!$article->deleted_at)
-                            <a href="{{ action('AdminController@deleteArticle', ['id' => $article->id]) }}">Delete</a>
+                            <a href="{{ action('ArticlesController@delete', ['id' => $article->id]) }}">Delete</a>
                         @else
                             <a href="{{ action('ArticlesController@restore', ['id' => $article->id]) }}">Restore</a>
                         @endif

@@ -36,19 +36,10 @@ class AdminController extends Controller
 
     public function usersControl()
     {
-        $users = User::all();
+        $users = User::withTrashed()->get();
 
         return view('admin.users')->with([
             'users' => $users
-        ]);
-    }
-
-    public function deleteArticle($id)
-    {
-        $article = Article::findOrFail($id);
-
-        return view('admin.delete_article')->with([
-            'article' => $article
         ]);
     }
 }

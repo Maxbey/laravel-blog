@@ -31,11 +31,13 @@ Route::group(['prefix' => 'admin'], function(){
     Route::group(['prefix' => 'users_control'], function(){
         Route::get('/', 'AdminController@usersControl');
         Route::resource('users', 'UsersController', ['only' => ['create', 'store', 'destroy']]);
+        Route::get('delete/{id}', 'UsersController@delete');
+        Route::get('restore/{id}', 'UsersController@restore');
     });
 
     Route::group(['prefix' => 'articles_control'], function(){
 
-        Route::get('delete/{id}', 'AdminController@deleteArticle');
+        Route::get('delete/{id}', 'ArticlesController@delete');
         Route::get('/', 'AdminController@articlesControl');
 
         Route::resource('articles', 'ArticlesController', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);

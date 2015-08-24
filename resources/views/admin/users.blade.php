@@ -19,21 +19,28 @@
                 <th>Login</th>
                 <th>Email</th>
                 <th>Registration date</th>
-                <th>Delete</th>
+                <th>Delete / Restore</th>
             </tr>
                 @foreach($users as $user)
-                <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->permission->group_name }}</td>
-                    <td><a href="#">{{ $user->login }}</a></td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->created_at }}</td>
-                    @if(Auth::user()->id != $user->id)
-                        <td><a href="">Delete</a></td>
-                    @else
-                        <td></td>
-                    @endif
-                </tr>
+                    <tr {{ $user->deleted_at ? 'class=danger' : '' }}>
+                        <td>{{ $user->id }}</td>
+                        <td>{{ $user->permission->group_name }}</td>
+                        <td><a href="#">{{ $user->login }}</a></td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->created_at }}</td>
+                        @if(Auth::user()->id != $user->id)
+
+                            <td>
+                                @if(!$user->deleted_at)
+                                    <a href="{{ action('UsersController@delete', ['id' => $user->id]) }}">Delete</a>
+                                @else
+                                    <a href="{{ action('UsersController@restore', ['id' => $user->id]) }}">Restore</a>
+                                @endif
+                            </td>
+                        @else
+                            <td></td>
+                        @endif
+                    </tr>
                 @endforeach
             </table>
         @else

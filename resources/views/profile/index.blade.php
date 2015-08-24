@@ -17,6 +17,8 @@
                     <th>Link</th>
                     <th>Comment</th>
                     <th>Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             @foreach($user->comments as $comment)
                 <tr>
@@ -24,6 +26,8 @@
                     <td><a href="{{ action('ArticlesController@show', ['id' => $comment->article->id]) . '#comment_' . $comment->id }}">{{ '#comment_' . $comment->id }}</a></td>
                     <td>{{ $comment->body }}</td>
                     <td>{{ $comment->created_at }}</td>
+                    <td><a href="{{ action('CommentsController@edit', ['id' => $comment->id]) }}">Edit</a></td>
+                    <td><a href="">Delete</a></td>
                 </tr>
             @endforeach
             </table>

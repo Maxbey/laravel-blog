@@ -47,6 +47,21 @@ class UsersController extends Controller
     }
 
     /**
+     * Show delete confirmation
+     *
+     * @param $id
+     * @return Response
+     */
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+
+        return view('admin.delete_user')->with([
+            'user' => $user
+        ]);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -54,6 +69,25 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+
+        return redirect('admin/users_control')->with([
+            'success-message' => 'User has been deleted'
+        ]);
+    }
+
+    /**
+     * Restore user.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore($id)
+    {
+        $user = User::onlyTrashed()->findOrFail($id);
+        $user->restore();
+
+        return redirect('admin/users_control')->with([
+            'success-message' => 'User has been restored'
+        ]);
     }
 }
