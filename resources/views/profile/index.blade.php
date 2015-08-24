@@ -26,8 +26,8 @@
                     <td>{{ $comment->created_at }}</td>
                 </tr>
             @endforeach
+            </table>
         @else
             <h3>You haven't left a comments</h3>
         @endif
-    </table>
 @stop

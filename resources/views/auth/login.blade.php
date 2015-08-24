@@ -29,9 +29,16 @@
                             </div>
                         </div>
 
+                        <div class="form-group checkbox">
+                            <div class="col-md-6 col-md-offset-4">
+                                <label>
+                                    {!! Form::checkbox('remember') !!} Remember me
+                                </label>
+                            </div>
+                        </div>
 
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
+                            <div class="col-md-6 col-md-offset-4" style="margin-top:20px">
                                 {!! Form::submit('Sign In', ['class' => 'btn btn-primary form-control']) !!}
                             </div>
                         </div>

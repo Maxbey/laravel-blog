@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Article;
 use App\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
+    use SoftDeletes;
+
     /**
      * Table name
      * @var string
@@ -25,6 +28,12 @@ class Comment extends Model
         'author',
         'body'
     ];
+
+    /**
+     * Carbon instances.
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * Comment owned by user.
