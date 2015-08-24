@@ -12,7 +12,7 @@ class TagsController extends Controller
 {
     public function articles($tagName)
     {
-        $tag = Tag::findBySlug($tagName);
+        $tag = Tag::findBySlugOrFail($tagName);
         $articles = $tag->articles()->published()->get();
 
         return view('articles.index')->with('articles', $articles);

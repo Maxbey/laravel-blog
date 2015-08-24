@@ -6,6 +6,9 @@ use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -39,6 +42,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if($e instanceof NotFoundHttpException)
+        {
+            return response()->view('errors.404', [], 404);
+        }
+
+        if($e instanceof ModelNotFoundException)
+        {
+            $view = '';
+
+            if($request->route()->hasParameter('articles'))
+            {
+                $view = 'errors.articles';
+            }
+
+            if($request->route()->hasParameter('tags'))
+            {
+                $view = 'errors.tags';
+            }
+
+            return response()->view($view, [], 501);
+        }
+
         return parent::render($request, $e);
     }
 }
