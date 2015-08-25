@@ -11,7 +11,7 @@ class CommentsService implements ICommentsService
         $this->commentsRepository = $repository;
     }
 
-    public function create($attributes, $articleId, $user)
+    public function create($attributes, $articleId, $user, $session)
     {
         $attributes['article_id'] = $articleId;
 
@@ -22,6 +22,11 @@ class CommentsService implements ICommentsService
         }
         else
         {
+            if(!$session->has('commentAuthor'))
+            {
+               session(['commentAuthor' => $attributes['author']]);
+            }
+
             $comment = $this->commentsRepository->create($attributes);
         }
 

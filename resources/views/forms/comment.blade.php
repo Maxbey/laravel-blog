@@ -1,9 +1,18 @@
 <div class="form-group">
     {!! Form::label('author', 'Author:') !!}
+
     @if(\Auth::check())
+
         {!! Form::text('author', Auth::user()->login, ['class' => 'form-control', 'readonly']) !!}
+
+    @elseif(\Session::has('commentAuthor'))
+
+        {!! Form::text('author', \Session::get('commentAuthor'), ['class' => 'form-control', 'readonly']) !!}
+
     @else
-    {!! Form::text('author', null, ['class' => 'form-control']) !!}
+
+        {!! Form::text('author', null, ['class' => 'form-control']) !!}
+
     @endif
     </div>
 

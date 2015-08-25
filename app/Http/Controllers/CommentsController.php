@@ -39,8 +39,9 @@ class CommentsController extends Controller
     {
         $attributes = $request->all();
         $user = $request->user();
+        $session = $request->session();
 
-        $this->commentsService->create($attributes, $articleId, $user);
+        $this->commentsService->create($attributes, $articleId, $user, $session);
 
         return redirect('blog/articles/' . $articleId)->with([
             'success-message' => 'Comment has been created'
