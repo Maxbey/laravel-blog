@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
+use App\Services\CommentsService\CommentsService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -13,11 +14,15 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentsController extends Controller
 {
+    private $commentsService;
+
     /**
      * Set the middleware.
      */
-    public function __construct()
+    public function __construct(CommentsService $service)
     {
+        $this->commentsService = $service;
+
         $this->middleware('auth', ['except' => ['store']]);
         $this->middleware('commentAuthor', ['only' => ['edit', 'update']]);
         $this->middleware('commentAuthorOrAdmin', ['only' => ['destroy', 'restore']]);
@@ -33,9 +38,9 @@ class CommentsController extends Controller
     public function store(CommentRequest $request, $articleId)
     {
         $attributes = $request->all();
-        $attributes['article_id'] = $articleId;
+        $user = $request->user();
 
-        $comment = $this->createComment($attributes);
+        $this->commentsService->create($attributes, $articleId, $user);
 
         return redirect('blog/articles/' . $articleId)->with([
             'success-message' => 'Comment has been created'
@@ -66,38 +71,15 @@ class CommentsController extends Controller
      */
     public function update(CommentRequest $request, $id)
     {
-        $comment = Comment::findOrFail($id);
-
         $attributes = $request->all();
-        $attributes['author'] = Auth::user()->login;
+        $user = $request->user();
 
+        $this->commentsService->update($id ,$attributes, $user);
 
-        $comment->update($attributes);
-
-
-        return redirect('im')->with([
+        return back()->with([
             'success-message' => 'Comment has been updated'
         ]);
 
-    }
-
-    /**
-     * Create record in the storage.
-     * @param $attributes
-     * @return static
-     */
-    private function createComment($attributes)
-    {
-        if(Auth::check())
-        {
-            $attributes['author'] = Auth::user()->login;
-            $comment = Auth::user()->comments()->create($attributes);
-        }
-        else
-        {
-            $comment = Comment::create($attributes);
-        }
-        return $comment;
     }
 
     /**
