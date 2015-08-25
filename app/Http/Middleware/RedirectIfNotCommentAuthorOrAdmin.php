@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class RedirectIfNotCommentAuthor
+class RedirectIfNotCommentAuthorOrAdmin
 {
     /**
      * Handle an incoming request.
@@ -19,13 +18,12 @@ class RedirectIfNotCommentAuthor
         $user = $request->user();
         $commentId = $request->route()->getParameter('comments');
 
-        if(!$user->commentAuthor($commentId))
+        if(!$user->commentAuthor($commentId) && !$user->isAdmin())
         {
             return back()->with([
-                'error-message' => 'You can`t edit someone else`s comment'
+                'error-message' => 'Access Denied'
             ]);
         }
-
 
         return $next($request);
     }

@@ -98,6 +98,28 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return false;
     }
 
+    /**
+     * Checks whether this user is the author of the comment.
+     *
+     * @param $commentId
+     * @return bool
+     */
+    public function commentAuthor($commentId)
+    {
+        $userCommentsIds = $this->comments()->lists('id');
+
+        if ($userCommentsIds->contains($commentId))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Hash password.
+     * @param $password
+     */
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);

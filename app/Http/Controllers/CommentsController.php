@@ -13,12 +13,23 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentsController extends Controller
 {
+    /**
+     * Set the middleware.
+     */
     public function __construct()
     {
-        $this->middleware('auth', ['only' => ['edit', 'update']]);
+        $this->middleware('auth', ['except' => ['store']]);
         $this->middleware('commentAuthor', ['only' => ['edit', 'update']]);
+        $this->middleware('commentAuthorOrAdmin', ['only' => ['destroy', 'restore']]);
     }
 
+    /**
+     * Save comment to the storage.
+     *
+     * @param CommentRequest $request
+     * @param $articleId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(CommentRequest $request, $articleId)
     {
         $attributes = $request->all();
@@ -31,6 +42,12 @@ class CommentsController extends Controller
         ]);
     }
 
+    /**
+     * Show edit comment form.
+     *
+     * @param $id
+     * @return $this
+     */
     public function edit($id)
     {
         $comment = Comment::findOrFail($id);
@@ -40,6 +57,13 @@ class CommentsController extends Controller
         ]);
     }
 
+    /**
+     * Update comment record in the database.
+     *
+     * @param CommentRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(CommentRequest $request, $id)
     {
         $comment = Comment::findOrFail($id);
@@ -57,6 +81,11 @@ class CommentsController extends Controller
 
     }
 
+    /**
+     * Create record in the storage.
+     * @param $attributes
+     * @return static
+     */
     private function createComment($attributes)
     {
         if(Auth::check())
@@ -69,5 +98,34 @@ class CommentsController extends Controller
             $comment = Comment::create($attributes);
         }
         return $comment;
+    }
+
+    /**
+     * Delete the comment.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        Comment::destroy($id);
+
+        return back()->with([
+            'success-message' => 'Comment has been deleted'
+        ]);
+    }
+
+    /**
+     * Restore the comment.
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore($id)
+    {
+        $comment = Comment::onlyTrashed()->findOrFail($id);
+        $comment->restore();
+
+        return back()->with([
+            'success-message' => 'Comment has been restored'
+        ]);
     }
 }
