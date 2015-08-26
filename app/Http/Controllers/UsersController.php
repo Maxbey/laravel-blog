@@ -10,9 +10,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
+    /**
+     * Set the middleware.
+     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -69,6 +73,13 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        if(Auth::user()->id == $id)
+        {
+            return redirect('admin/users_control')->with([
+                'error-message' => 'You can`t delete yourself'
+            ]);
+        }
+
         User::destroy($id);
 
         return redirect('admin/users_control')->with([
