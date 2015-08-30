@@ -10,9 +10,15 @@ use App\Http\Controllers\Controller;
 
 class ApiController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('ajax');
+    }
+
     /**
      * Return all articles in json format.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function articles()

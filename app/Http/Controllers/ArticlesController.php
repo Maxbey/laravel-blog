@@ -27,6 +27,7 @@ class ArticlesController extends Controller
 
         $this->middleware('auth', ['only' => ['create', 'edit', 'destroy', 'restore']]);
         $this->middleware('admin', ['only' => ['create', 'edit', 'destroy', 'restore']]);
+        $this->middleware('ajax', ['only' => ['destroy', 'restore']]);
     }
 
     /**

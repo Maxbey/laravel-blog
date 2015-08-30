@@ -31,6 +31,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'commentAuthor' => \App\Http\Middleware\RedirectIfNotCommentAuthor::class,
-        'commentAuthorOrAdmin' => \App\Http\Middleware\RedirectIfNotCommentAuthorOrAdmin::class
+        'commentAuthorOrAdmin' => \App\Http\Middleware\RedirectIfNotCommentAuthorOrAdmin::class,
+        'ajax' => \App\Http\Middleware\RedirectIfNotAjax::class
     ];
 }

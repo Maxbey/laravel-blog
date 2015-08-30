@@ -17,6 +17,7 @@ elixir(function(mix) {
 
 elixir(function(mix) {
  mix.scripts([
+     '*.js',
      'classes/Helpers.js',
      'classes/Model.js',
      'classes/ArticlesModel.js',
