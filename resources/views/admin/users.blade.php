@@ -32,9 +32,9 @@
 
                             <td>
                                 @if(!$user->deleted_at)
-                                    <a href="{{ action('UsersController@delete', ['id' => $user->id]) }}">Delete</a>
+                                    <a href="">Delete</a>
                                 @else
-                                    <a href="{{ action('UsersController@restore', ['id' => $user->id]) }}">Restore</a>
+                                    <a href="">Restore</a>
                                 @endif
                             </td>
                         @else

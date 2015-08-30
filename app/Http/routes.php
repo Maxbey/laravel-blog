@@ -30,18 +30,25 @@ Route::group(['prefix' => 'admin'], function(){
 
     Route::group(['prefix' => 'users_control'], function(){
         Route::get('/', 'AdminController@usersControl');
-        Route::resource('users', 'UsersController', ['only' => ['create', 'store', 'destroy']]);
-        Route::get('delete/{id}', 'UsersController@delete');
-        Route::get('restore/{id}', 'UsersController@restore');
+
+        Route::resource('users', 'UsersController', ['only' => ['create', 'store']]);
+        Route::post('articles/restore/{id}', 'UsersController@restore');
     });
 
     Route::group(['prefix' => 'articles_control'], function(){
-
-        Route::get('delete/{id}', 'ArticlesController@delete');
         Route::get('/', 'AdminController@articlesControl');
 
-        Route::resource('articles', 'ArticlesController', ['only' => ['create', 'store', 'edit', 'update', 'destroy']]);
-        Route::get('restore/{id}', 'ArticlesController@restore');
+        Route::resource('articles', 'ArticlesController', ['only' => ['create', 'store', 'edit', 'update']]);
+    });
+
+});
+
+Route::group(['prefix' => 'api'], function(){
+
+    Route::group(['prefix' => 'articles'], function(){
+        Route::get('/', 'ApiController@articles');
+        Route::delete('delete/{id}', 'ArticlesController@destroy');
+        Route::post('restore/{id}', 'ArticlesController@restore');
     });
 
 });

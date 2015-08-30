@@ -131,20 +131,6 @@ class ArticlesController extends Controller
     }
 
     /**
-     * Show delete confirmation
-     * @param $id
-     * @return Response
-     */
-    public function delete($id)
-    {
-        $article = Article::findOrFail($id);
-
-        return view('admin.delete_article')->with([
-            'article' => $article
-        ]);
-    }
-
-    /**
      * Remove the article from storage.
      *
      * @param  int $id
@@ -154,8 +140,8 @@ class ArticlesController extends Controller
     {
         Article::destroy($id);
 
-        return redirect('admin/articles_control')->with([
-            'success-message' => 'Article has been deleted'
+        return response()->json([
+            'success' => true
         ]);
     }
 
@@ -169,8 +155,8 @@ class ArticlesController extends Controller
         $article = Article::onlyTrashed()->findOrFail($id);
         $article->restore();
 
-        return redirect('admin/articles_control')->with([
-            'success-message' => 'Article has been restored'
+        return response()->json([
+            'success' => true
         ]);
     }
 }

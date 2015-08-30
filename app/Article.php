@@ -50,6 +50,57 @@ class Article extends Model implements SluggableInterface
     protected $dates = ['published_at', 'deleted_at'];
 
     /**
+     * Appends for more convenient use in json format.
+     * @return array
+     */
+    protected $appends = ['author', 'urls', 'deleted', 'inQueue'];
+
+    /**
+     * deleted attribute getter.
+     * @return bool
+     */
+    public function getDeletedAttribute()
+    {
+        if($this->isDeleted())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * inQueue attribute getter.
+     * @return bool
+     */
+    public function getInQueueAttribute()
+    {
+        if($this->isPublished())
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Author attribute getter.
+     * @return string
+     */
+    public function getAuthorAttribute()
+    {
+        return $this->user->login;
+    }
+
+    public function getUrlsAttribute()
+    {
+        return  [
+            'showUrl' => action('ArticlesController@show', ['id' => $this->id]),
+            'editUrl' => action('ArticlesController@edit', ['id' => $this->id]),
+        ];
+    }
+
+    /**
      * Article owned by user
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -119,9 +170,27 @@ class Article extends Model implements SluggableInterface
     }
 
 
+    /**
+     * Check whether the article is published.
+     * @return bool
+     */
     public function isPublished()
     {
         return $this->published_at < Carbon::now() ? true : false;
+    }
+
+    /**
+     * Check whether the article is removed.
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        if($this->deleted_at)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 

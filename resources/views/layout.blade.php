@@ -3,16 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>@yield('title')</title>
-{!! Html::script('vendor/jquery/dist/jquery.min.js'); !!}
-{!! Html::script('vendor/select2/dist/js/select2.min.js'); !!}
-{!! Html::script('vendor/bootstrap/dist/js/bootstrap.min.js'); !!}
 
-{!! Html::style('vendor/bootstrap/dist/css/bootstrap.min.css') !!}
-{!! Html::style('vendor/select2-bootstrap-theme/dist/select2-bootstrap.min.css') !!}
-{!! Html::style('vendor/select2/dist/css/select2.min.css') !!}
+    {!! Html::script('vendor/jquery/dist/jquery.min.js') !!}
+    {!! Html::script('vendor/select2/dist/js/select2.min.js') !!}
+    {!! Html::script('vendor/bootstrap/dist/js/bootstrap.min.js') !!}
+    {!! Html::script('vendor/handlebars/handlebars.runtime.min.js') !!}
+    {!! Html::script('vendor/handlebars/handlebars.min.js') !!}
+    <script src="{{ elixir('js/all.js') }}"></script>
 
+    {!! Html::style('vendor/bootstrap/dist/css/bootstrap.min.css') !!}
+    {!! Html::style('vendor/select2-bootstrap-theme/dist/select2-bootstrap.min.css') !!}
+    {!! Html::style('vendor/select2/dist/css/select2.min.css') !!}
 
-<link rel="stylesheet" href="{{ elixir('css/app.css') }}"/>
+    {!! Html::style('css/app.css') !!}
 </head>
 <body>
     @include('main.navigation')
@@ -32,5 +35,7 @@
             });
         });
     </script>
+
+    @yield('js')
 </body>
 </html>
