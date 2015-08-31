@@ -6,8 +6,8 @@ function ArticlesModel(token)
 
     this.urls = {
         allUrl: '/api/articles',
-        deleteUrl: '/api/articles/delete/',
-        restoreUrl: '/api/articles/restore/'
+        deleteUrl: '/api/articles/delete',
+        restoreUrl: '/api/articles/restore'
     };
 };
 

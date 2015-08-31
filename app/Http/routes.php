@@ -47,8 +47,8 @@ Route::group(['prefix' => 'api'], function(){
 
     Route::group(['prefix' => 'articles'], function(){
         Route::get('/', 'ApiController@articles');
-        Route::delete('delete/{id}', 'ArticlesController@destroy');
-        Route::post('restore/{id}', 'ArticlesController@restore');
+        Route::delete('delete', 'ArticlesController@destroy');
+        Route::post('restore', 'ArticlesController@restore');
     });
 
 });

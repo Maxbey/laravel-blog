@@ -28,7 +28,7 @@ Model.prototype.delete = function(data, successcb, errorcb)
     data._method = 'delete';
 
     $.ajax({
-        url: this.urls.deleteUrl + data.id,
+        url: this.urls.deleteUrl,
         type: 'POST',
         data:data,
         success:Helpers.safeCallback(successcb),
@@ -41,7 +41,7 @@ Model.prototype.restore = function(data, successcb, errorcb)
     this.tokenToData(data);
 
     $.ajax({
-        url: this.urls.restoreUrl + data.id,
+        url: this.urls.restoreUrl,
         type: 'POST',
         data:data,
         success:Helpers.safeCallback(successcb),

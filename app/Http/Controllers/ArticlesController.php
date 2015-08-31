@@ -137,9 +137,9 @@ class ArticlesController extends Controller
      * @param  int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        Article::destroy($id);
+        Article::destroy($request['id']);
 
         return response()->json([
             'success' => true
@@ -151,9 +151,9 @@ class ArticlesController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore($id)
+    public function restore(Request $request)
     {
-        $article = Article::onlyTrashed()->findOrFail($id);
+        $article = Article::onlyTrashed()->findOrFail($request['id']);
         $article->restore();
 
         return response()->json([
