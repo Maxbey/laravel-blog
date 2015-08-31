@@ -26,7 +26,7 @@
                 <script id="article-row-template" type="text/x-handlebars-template">
                     @{{#each this}}
 
-                    <tr class="@{{rowStyle}} article-row" data-id="@{{id}}">
+                    <tr class="@{{rowStyle}} article-row" data-id="@{{id}}" data-title="@{{title}}">
 
                         <td class="id">@{{id}}</td>
                         <td>@{{author}}</td>

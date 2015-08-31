@@ -20,6 +20,7 @@ elixir(function(mix) {
      '*.js',
      'classes/Helpers.js',
      'classes/Model.js',
+     'classes/UserInterface.js',
      'classes/ArticlesModel.js',
      'classes/ControlTable.js',
      'controllers/ArticlesPageController.js'

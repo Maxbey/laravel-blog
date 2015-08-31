@@ -33,8 +33,6 @@ function ArticlesPageController()
 
             table.registerTemplateHelper(rowStyleTemplateHelper);
             table.composeTable(data);
-
-            bindEvents();
         });
     };
 
@@ -44,10 +42,14 @@ function ArticlesPageController()
         $(document).off("click", ".delete-link");
         $(document).on("click", ".delete-link", function(event){
             event.preventDefault();
+
             var id = $(this).parent().parent().data('id');
+            var title = $(this).parent().parent().data('title');
+
             model.delete({id:id}, function(){
                 table.clearTable();
                 renderTable();
+                UserInterface.showSuccessMessage('Article (' + title + ') has been deleted');
             });
         });
 
@@ -56,9 +58,12 @@ function ArticlesPageController()
             event.preventDefault();
 
             var id = $(this).parent().parent().data('id');
+            var title = $(this).parent().parent().data('title');
+
             model.restore({id:id}, function(){
                 table.clearTable();
                 renderTable();
+                UserInterface.showSuccessMessage('Article (' + title + ') has been restored');
             });
         });
     };
