@@ -14,7 +14,7 @@ UserInterface.showMessage = function(message, type){
 
     var template = Handlebars.compile($('#interface-message').html() );
 
-    UserInterface.removeMessage();
+    UserInterface.removeMessages();
     $('.interface-message-container').append( template(data));
 
 };
@@ -28,9 +28,12 @@ UserInterface.showErrorMessage = function(message){
     UserInterface.showMessage(message, 'error-message');
 };
 
-UserInterface.removeMessage = function(){
-    var message = $('.alert');
+UserInterface.removeMessages = function(){
+    var messages = $('.alert');
 
-    if(message.length)
-        message.remove();
+    if(messages.length > 4){
+        $.each(messages, function(index, value){
+            $(value).remove();
+        });
+    }
 };

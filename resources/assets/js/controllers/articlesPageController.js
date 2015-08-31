@@ -39,32 +39,34 @@ function ArticlesPageController()
     /*Bind the events to the links*/
 
     var bindEvents = function(){
-        $(document).off("click", ".delete-link");
-        $(document).on("click", ".delete-link", function(event){
-            event.preventDefault();
+        $(document).on('click', 'a', function(e){
+            var link = this;
 
-            var id = $(this).parent().parent().data('id');
-            var title = $(this).parent().parent().data('title');
+            if(link.className === 'delete-link' || link.className === 'restore-link'){
+                e.preventDefault();
 
-            model.delete({id:id}, function(){
-                table.clearTable();
-                renderTable();
-                UserInterface.showSuccessMessage('Article (' + title + ') has been deleted');
-            });
-        });
+                var id = $(link).parent().parent().data('id');
+                var title = $(link).parent().parent().data('title');
+                var message = '';
 
-        $(document).off("click", ".restore-link");
-        $(document).on("click", ".restore-link", function(event){
-            event.preventDefault();
+                if(link.className === 'delete-link'){
+                    model.delete({id:id}, function(){
+                        table.clearTable();
+                        renderTable();
+                        UserInterface.showSuccessMessage('Article (' + title + ') has been deleted');
+                    });
+                }
 
-            var id = $(this).parent().parent().data('id');
-            var title = $(this).parent().parent().data('title');
+                if(link.className === 'restore-link'){
+                    model.restore({id:id}, function(){
+                        table.clearTable();
+                        renderTable();
+                        UserInterface.showSuccessMessage('Article (' + title + ') has been restored');
+                    });
+                }
 
-            model.restore({id:id}, function(){
-                table.clearTable();
-                renderTable();
-                UserInterface.showSuccessMessage('Article (' + title + ') has been restored');
-            });
+            }
+
         });
     };
 }
