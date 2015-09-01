@@ -21,9 +21,7 @@ elixir(function(mix) {
      'classes/Helpers.js',
      'classes/UserInterface.js',
      'classes/ControlTable.js',
-     'models/Model.js',
-     'models/ArticlesModel.js',
-     'models/UsersModel.js',
+     'models/*.js',
      'controllers/*.js'
 
      ]).version('public/js/all.js');

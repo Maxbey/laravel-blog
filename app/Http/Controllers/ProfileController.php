@@ -16,6 +16,7 @@ class ProfileController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('ajax', ['only' => ['comments']]);
     }
 
     /**
@@ -26,6 +27,16 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         return view('profile.index')->with(['user' => $user]);
+    }
+
+    /**
+     * Return user`s comments.
+     */
+    public function comments()
+    {
+        $user = Auth::user();
+
+        return $user->comments;
     }
 
 }

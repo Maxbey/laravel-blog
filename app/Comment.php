@@ -36,6 +36,33 @@ class Comment extends Model
     protected $dates = ['deleted_at'];
 
     /**
+     * Appends for more convenient use in json format.
+     * @return array
+     */
+    protected $appends = ['articleTitle', 'urls'];
+
+    /**
+     * article attribute getter.
+     * @return string
+     */
+    public function getArticleTitleAttribute()
+    {
+        return $this->article->title;
+    }
+
+    /**
+     * urls attribute getter.
+     * @return array
+     */
+    public function getUrlsAttribute(){
+        return  [
+            'articleUrl' => action('ArticlesController@show', ['id' => $this->article->id]),
+            'editUrl' => action('CommentsController@edit', ['id' => $this->id]),
+            'commentUrl' => action('ArticlesController@show', ['id' => $this->article->id]) . '#comment_' . $this->id
+        ];
+    }
+
+    /**
      * Comment owned by user.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

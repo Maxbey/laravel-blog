@@ -7,7 +7,7 @@ Route::group(['prefix' => 'im'], function(){
     Route::get('/', 'ProfileController@index');
 
     Route::post('comments/{id}', 'CommentsController@store');
-    Route::resource('comments', 'CommentsController', ['only' => ['edit', 'update', 'destroy']]);
+    Route::resource('comments', 'CommentsController', ['only' => ['edit', 'update']]);
 });
 
 Route::group(['prefix' => 'auth'], function(){
@@ -55,6 +55,14 @@ Route::group(['prefix' => 'api'], function(){
         Route::get('/', 'ApiController@users');
         Route::delete('delete', 'UsersController@destroy');
         Route::post('restore', 'UsersController@restore');
+    });
+
+    Route::group(['prefix' => 'profile'], function(){
+        Route::get('comments', 'ProfileController@comments');
+    });
+
+    Route::group(['prefix' => 'comments'], function(){
+        Route::delete('delete', 'CommentsController@destroy');
     });
 
 });

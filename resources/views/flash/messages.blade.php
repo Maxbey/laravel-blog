@@ -12,9 +12,9 @@
     <div class="interface-message-container">
         <script id="interface-message" type="text/x-handlebars-template">
             @{{#if success}}
-                <div class="alert alert-success">
-                    @{{message}}
-                </div>
+            <div class="alert alert-success">
+                @{{message}}
+            </div>
             @{{/if}}
 
             @{{#if error}}

@@ -26,6 +26,7 @@ class CommentsController extends Controller
         $this->middleware('auth', ['except' => ['store']]);
         $this->middleware('commentAuthor', ['only' => ['edit', 'update']]);
         $this->middleware('commentAuthorOrAdmin', ['only' => ['destroy', 'restore']]);
+        $this->middleware('ajax', ['only' => ['destroy', 'restore']]);
     }
 
     /**
@@ -88,13 +89,12 @@ class CommentsController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        Comment::destroy($id);
+        $comment = Comment::findOrFail($request['id']);
+        $comment->delete();
 
-        return back()->with([
-            'success-message' => 'Comment has been deleted'
-        ]);
+        return response('Comment has been deleted', 202);
     }
 
     /**
@@ -107,8 +107,6 @@ class CommentsController extends Controller
         $comment = Comment::onlyTrashed()->findOrFail($id);
         $comment->restore();
 
-        return back()->with([
-            'success-message' => 'Comment has been restored'
-        ]);
+        return response('Comment has been restored', 202);
     }
 }

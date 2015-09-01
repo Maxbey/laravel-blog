@@ -49,7 +49,7 @@ function UsersPageController()
                         renderTable();
                         UserInterface.showSuccessMessage(data);
                     }, function(data){
-                        UserInterface.showErrorMessage(data);
+                        UserInterface.showErrorMessage(data.responseText);
                     });
                 }
 
