@@ -20,7 +20,7 @@
 
         @include('errors.list')
     <content>
-       <div class="article col-md-10 center-block"><p>{{ $article->body }}</p></div>
+       <div class="article col-md-10 center-block"><p>{!! $article->body !!}</p></div>
     </content>
     <div class="col-md-8">
        <div class="comments">
@@ -33,7 +33,7 @@
                          <small>{{ $comment->created_at->format('m-d-y') }} - {{ $comment->created_at->format('H-i-s') }}</small>
                         </h4>
                     </div>
-                    <p>{{ $comment->body }}</p>
+                    <p>{!! $comment->body !!}</p>
                     @if(Auth::check())
                         @if($comment->byUser() && Auth::user()->id == $comment->user->id)
                             <a href="{{ action('CommentsController@edit', ['id' => $comment->id]) }}">Edit</a>

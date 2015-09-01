@@ -30,7 +30,7 @@
                 @foreach($comments as $comment)
                     <div class="latest-comment">
                         <h4><a href="{{ action('ArticlesController@show', ['id' => $comment->article->id]) . '#comment_' . $comment->id }}">{{ $comment->author }}: <small>{{ $comment->article->title }}</small></a></h4>
-                        <p>{{ $comment->body }}</p>
+                        <p>{!! $comment->body !!}</p>
                     </div>
                 @endforeach
 

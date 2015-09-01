@@ -9,6 +9,7 @@
     {!! Html::script('vendor/bootstrap/dist/js/bootstrap.min.js') !!}
     {!! Html::script('vendor/handlebars/handlebars.runtime.min.js') !!}
     {!! Html::script('vendor/handlebars/handlebars.min.js') !!}
+    {!! Html::script('vendor/tinymce/tinymce.jquery.min.js') !!}
     <script src="{{ elixir('js/all.js') }}"></script>
 
     {!! Html::style('vendor/bootstrap/dist/css/bootstrap.min.css') !!}
@@ -32,6 +33,10 @@
                 width:'100%',
                 placeholder: "Select the tags",
                 tags: true
+            });
+
+            tinymce.init({
+                selector: "#article-textarea, #comment-textarea"
             });
         });
     </script>
