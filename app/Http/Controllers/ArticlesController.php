@@ -139,11 +139,10 @@ class ArticlesController extends Controller
      */
     public function destroy(Request $request)
     {
-        Article::destroy($request['id']);
+        $article = Article::findOrFail($request['id']);
+        $article->delete();
 
-        return response()->json([
-            'success' => true
-        ]);
+        return response('Article (' . $article->login . ') has been deleted', 202);
     }
 
     /**
@@ -156,8 +155,6 @@ class ArticlesController extends Controller
         $article = Article::onlyTrashed()->findOrFail($request['id']);
         $article->restore();
 
-        return response()->json([
-            'success' => true
-        ]);
+        return response('Article (' . $article->login . ') has been restored', 202);
     }
 }

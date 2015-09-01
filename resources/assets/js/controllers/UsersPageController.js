@@ -1,11 +1,11 @@
 
-//Articles Page Controller.
+//Users Page Controller
 
-function ArticlesPageController()
+function UsersPageController()
 {
     var token = $('table').data('token'); //Grab the token for CSRF protect.
-    var model = new ArticlesModel(token);
-    var table = new ControlTable('table tbody', '#articles-table-template');
+    var model = new UsersModel(token);
+    var table = new ControlTable('table tbody', '#users-table-template');
 
     //Handlebars helper function.
     var rowStyleTemplateHelper = {
@@ -13,9 +13,6 @@ function ArticlesPageController()
         callback:function(){
             if(this.deleted)
                 return 'danger';
-
-            if(this.inQueue)
-                return 'warning';
 
             return '';
         }
@@ -51,6 +48,8 @@ function ArticlesPageController()
                         table.clearTable();
                         renderTable();
                         UserInterface.showSuccessMessage(data);
+                    }, function(data){
+                        UserInterface.showErrorMessage(data);
                     });
                 }
 

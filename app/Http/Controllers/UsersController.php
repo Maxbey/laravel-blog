@@ -21,6 +21,8 @@ class UsersController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('admin');
+
+        $this->middleware('ajax', ['only' => ['destroy', 'restore']]);
     }
 
     /**
@@ -71,20 +73,18 @@ class UsersController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        if(Auth::user()->id == $id)
+        if($request->user()->id == $request['id'])
         {
-            return redirect('admin/users_control')->with([
-                'error-message' => 'You can`t delete yourself'
-            ]);
+            return response('You can`t delete yourself', 500);
         }
 
-        User::destroy($id);
+        $user = User::findOrFail($request['id']);
 
-        return redirect('admin/users_control')->with([
-            'success-message' => 'User has been deleted'
-        ]);
+        $user->delete();
+
+        return response('User (' . $user->login . ') has been deleted', 202);
     }
 
     /**
@@ -92,13 +92,11 @@ class UsersController extends Controller
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function restore($id)
+    public function restore(Request $request)
     {
-        $user = User::onlyTrashed()->findOrFail($id);
+        $user = User::onlyTrashed()->findOrFail($request['id']);
         $user->restore();
 
-        return redirect('admin/users_control')->with([
-            'success-message' => 'User has been restored'
-        ]);
+        return response('User (' . $user->login . ') has been restored', 202);
     }
 }

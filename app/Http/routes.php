@@ -51,5 +51,11 @@ Route::group(['prefix' => 'api'], function(){
         Route::post('restore', 'ArticlesController@restore');
     });
 
+    Route::group(['prefix' => 'users'], function(){
+        Route::get('/', 'ApiController@users');
+        Route::delete('delete', 'UsersController@destroy');
+        Route::post('restore', 'UsersController@restore');
+    });
+
 });
 

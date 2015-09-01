@@ -23,10 +23,10 @@
                     <th>Delete / Restore</th>
                 </tr>
 
-                <script id="article-row-template" type="text/x-handlebars-template">
+                <script id="articles-table-template" type="text/x-handlebars-template">
                     @{{#each this}}
 
-                    <tr class="@{{rowStyle}} article-row" data-id="@{{id}}" data-title="@{{title}}">
+                    <tr class="@{{rowStyle}} article-row" data-id="@{{id}}">
 
                         <td class="id">@{{id}}</td>
                         <td>@{{author}}</td>

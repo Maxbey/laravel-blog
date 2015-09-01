@@ -12,7 +12,7 @@
     <h4><a href="#">Create invitation key</a></h4>
 
         @if(!$users->isEmpty())
-            <table class="table table-bordered">
+            <table class="table table-bordered" data-token="{{ csrf_token() }}">
             <tr>
                 <th>id</th>
                 <th>Permissions</th>
@@ -21,29 +21,43 @@
                 <th>Registration date</th>
                 <th>Delete / Restore</th>
             </tr>
-                @foreach($users as $user)
-                    <tr {{ $user->deleted_at ? 'class=danger' : '' }}>
-                        <td>{{ $user->id }}</td>
-                        <td>{{ $user->permission->group_name }}</td>
-                        <td><a href="#">{{ $user->login }}</a></td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->created_at }}</td>
-                        @if(Auth::user()->id != $user->id)
 
-                            <td>
-                                @if(!$user->deleted_at)
-                                    <a href="">Delete</a>
-                                @else
-                                    <a href="">Restore</a>
-                                @endif
-                            </td>
-                        @else
-                            <td></td>
-                        @endif
+                <script id="users-table-template" type="text/x-handlebars-template">
+
+                    @{{#each this}}
+
+                    <tr class="@{{rowStyle}} user-row" data-id="@{{id}}">
+
+                        <td class="id">@{{id}}</td>
+                        <td>@{{permissions}}</td>
+                        <td>@{{login}}</td>
+                        <td>@{{email}}</td>
+                        <td>@{{created_at}}</td>
+                        <td>
+                            @{{#if deleted}}
+                            <a href="" class="restore-link">Restore</a>
+
+                            @{{else}}
+                            <a href="" class="delete-link">Delete</a>
+                            @{{/if}}
+                        </td>
                     </tr>
-                @endforeach
-            </table>
+
+                    @{{/each}}
+
+                </script>
         @else
             <h3>No registered users yet.</h3>
         @endif
+@stop
+
+@section('js')
+    <script>
+
+        $(function(){
+            var controller = new UsersPageController();
+            controller.boot();
+        });
+
+    </script>
 @stop

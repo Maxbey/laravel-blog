@@ -19,11 +19,12 @@ elixir(function(mix) {
  mix.scripts([
      '*.js',
      'classes/Helpers.js',
-     'classes/Model.js',
      'classes/UserInterface.js',
-     'classes/ArticlesModel.js',
      'classes/ControlTable.js',
-     'controllers/ArticlesPageController.js'
+     'models/Model.js',
+     'models/ArticlesModel.js',
+     'models/UsersModel.js',
+     'controllers/*.js'
 
      ]).version('public/js/all.js');
 });

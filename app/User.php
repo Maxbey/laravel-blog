@@ -57,6 +57,35 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $dates = ['deleted_at'];
 
     /**
+     * Appends for more convenient use in json format.
+     * @return array
+     */
+    protected $appends = ['permissions', 'deleted'];
+
+    /**
+     * deleted attribute getter.
+     * @return bool
+     */
+    public function getDeletedAttribute()
+    {
+        if($this->isDeleted())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * permissions attribute getter.
+     * @return string
+     */
+    public function getPermissionsAttribute()
+    {
+        return $this->permissions->group_name;
+    }
+
+    /**
      * A user can have many articles
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -91,6 +120,20 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function isAdmin()
     {
         if ($this->permission->id === 1)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check whether the user is removed.
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        if($this->deleted_at)
         {
             return true;
         }
