@@ -82,7 +82,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function getPermissionsAttribute()
     {
-        return $this->permissions->group_name;
+        return $this->permission->group_name;
     }
 
     /**

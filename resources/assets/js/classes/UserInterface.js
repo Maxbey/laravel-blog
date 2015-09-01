@@ -21,7 +21,7 @@ UserInterface.showMessage = function(message, type){
 
 UserInterface.showSuccessMessage = function(message){
     UserInterface.showMessage(message, 'success-message');
-    $('.alert').delay(2000).fadeOut();
+    $('.alert-success').delay(2000).fadeOut();
 };
 
 UserInterface.showErrorMessage = function(message){

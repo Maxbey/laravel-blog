@@ -142,7 +142,7 @@ class ArticlesController extends Controller
         $article = Article::findOrFail($request['id']);
         $article->delete();
 
-        return response('Article (' . $article->login . ') has been deleted', 202);
+        return response('Article (' . $article->title . ') has been deleted', 202);
     }
 
     /**
@@ -155,6 +155,6 @@ class ArticlesController extends Controller
         $article = Article::onlyTrashed()->findOrFail($request['id']);
         $article->restore();
 
-        return response('Article (' . $article->login . ') has been restored', 202);
+        return response('Article (' . $article->title . ') has been restored', 202);
     }
 }
