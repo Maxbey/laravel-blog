@@ -9,7 +9,6 @@
     <hr/>
 
     <h4><a href="{{ action('UsersController@create') }}">Create a new one user</a></h4>
-    <h4><a href="#">Create invitation key</a></h4>
 
         @if(!$users->isEmpty())
             <table class="table table-bordered" data-token="{{ csrf_token() }}">

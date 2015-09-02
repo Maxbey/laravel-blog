@@ -41,6 +41,10 @@ Route::group(['prefix' => 'admin'], function(){
         Route::resource('articles', 'ArticlesController', ['only' => ['create', 'store', 'edit', 'update']]);
     });
 
+    Route::group(['prefix' => 'keys_control'], function(){
+        Route::get('/', 'AdminController@keysControl');
+    });
+
 });
 
 Route::group(['prefix' => 'api'], function(){

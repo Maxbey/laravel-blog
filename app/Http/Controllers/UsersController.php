@@ -34,7 +34,7 @@ class UsersController extends Controller
     {
         $permissions = Permission::lists('group_name', 'id');
 
-        return view('admin.create_user')->with(['permissions' => $permissions]);
+        return view('admin.users.create_user')->with(['permissions' => $permissions]);
     }
 
     /**

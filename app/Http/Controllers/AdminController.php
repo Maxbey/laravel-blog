@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Repositories\KeysRepository\KeysRepository;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -20,11 +21,19 @@ class AdminController extends Controller
         $this->middleware('admin');
     }
 
+    /**
+     * Show admin dashboard.
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
         return view('admin.index');
     }
 
+    /**
+     * Show articles management page.
+     * @return \Illuminate\View\View
+     */
     public function articlesControl()
     {
         $articles = Article::withTrashed()->get();
@@ -34,12 +43,28 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * Show users management page.
+     * @return \Illuminate\View\View
+     */
     public function usersControl()
     {
         $users = User::withTrashed()->get();
 
-        return view('admin.users')->with([
+        return view('admin.users.index')->with([
             'users' => $users
+        ]);
+    }
+
+    /**
+     * Show invitation keys management page.
+     */
+    public function keysControl(KeysRepository $repository)
+    {
+        $keys = $repository->all();
+
+        return view('admin.keys')->with([
+            'keys'  =>  $keys
         ]);
     }
 }

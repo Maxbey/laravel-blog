@@ -9,6 +9,7 @@
     <ul>
         <li><h4><a href="{{ action('AdminController@articlesControl') }}">Articles management</a></h4></li>
         <li><h4><a href="{{ action('AdminController@usersControl') }}">Users management</a></h4></li>
+        <li><h4><a href="{{ action('AdminController@keysControl') }}">Invitation keys management</a></h4></li>
     </ul>
 
 @stop
