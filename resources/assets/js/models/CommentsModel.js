@@ -1,9 +1,7 @@
 //Comment Model extends Model
 
-function CommentsModel(token)
+function CommentsModel()
 {
-    this.token = token;
-
     this.urls = {
         authCommentsUrl: '/api/profile/comments',
         deleteUrl: '/api/comments/delete'

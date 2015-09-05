@@ -1,9 +1,8 @@
 
 //Resource class with methods to restore and delete data in storage.
 
-function Model(urls, token)
+function Model(urls)
 {
-    this.token = token;
 
     this.urls = {
         allUrl: urls.allUrl,
@@ -24,7 +23,6 @@ Model.prototype.all = function(successcb, errorcb)
 
 Model.prototype.delete = function(data, successcb, errorcb)
 {
-    this.tokenToData(data);
     data._method = 'delete';
 
     $.ajax({
@@ -38,7 +36,6 @@ Model.prototype.delete = function(data, successcb, errorcb)
 
 Model.prototype.restore = function(data, successcb, errorcb)
 {
-    this.tokenToData(data);
 
     $.ajax({
         url: this.urls.restoreUrl,
@@ -47,9 +44,4 @@ Model.prototype.restore = function(data, successcb, errorcb)
         success:Helpers.safeCallback(successcb),
         error:Helpers.safeCallback(errorcb)
     });
-};
-
-Model.prototype.tokenToData = function(data)
-{
-    data._token = this.token;
 };

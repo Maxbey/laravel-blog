@@ -1,9 +1,7 @@
 //ArticlesModel extends Model
 
-function ArticlesModel(token)
+function ArticlesModel()
 {
-    this.token = token;
-
     this.urls = {
         allUrl: '/api/articles',
         deleteUrl: '/api/articles/delete',

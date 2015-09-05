@@ -3,8 +3,7 @@
 
 function ProfilePageController()
 {
-    var token = $('table').data('token'); //Grab the token for CSRF protect.
-    var model = new CommentsModel(token);
+    var model = new CommentsModel();
     var table = new ControlTable('table tbody', '#comments-table-template');
 
     this.boot = function(){

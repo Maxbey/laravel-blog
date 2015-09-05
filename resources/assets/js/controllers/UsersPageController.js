@@ -3,8 +3,7 @@
 
 function UsersPageController()
 {
-    var token = $('table').data('token'); //Grab the token for CSRF protect.
-    var model = new UsersModel(token);
+    var model = new UsersModel();
     var table = new ControlTable('table tbody', '#users-table-template');
 
     //Handlebars helper function.

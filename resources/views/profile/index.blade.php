@@ -11,7 +11,7 @@
     <h2>Your comments:</h2>
 
         @if(!$user->comments->isEmpty())
-            <table class="table table-bordered" data-token="{{ csrf_token() }}">
+            <table class="table table-bordered">
                 <tr>
                     <th>Article</th>
                     <th>Link</th>

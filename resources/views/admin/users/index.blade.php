@@ -11,7 +11,7 @@
     <h4><a href="{{ action('UsersController@create') }}">Create a new one user</a></h4>
 
         @if(!$users->isEmpty())
-            <table class="table table-bordered" data-token="{{ csrf_token() }}">
+            <table class="table table-bordered">
             <tr>
                 <th>id</th>
                 <th>Permissions</th>

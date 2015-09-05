@@ -3,8 +3,7 @@
 
 function ArticlesPageController()
 {
-    var token = $('table').data('token'); //Grab the token for CSRF protect.
-    var model = new ArticlesModel(token);
+    var model = new ArticlesModel();
     var table = new ControlTable('table tbody', '#articles-table-template');
 
     //Handlebars helper function.

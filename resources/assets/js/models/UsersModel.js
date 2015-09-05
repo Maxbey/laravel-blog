@@ -1,9 +1,7 @@
 //Users Model extends Model
 
-function UsersModel(token)
+function UsersModel()
 {
-    this.token = token;
-
     this.urls = {
         allUrl: '/api/users',
         deleteUrl: '/api/users/delete',

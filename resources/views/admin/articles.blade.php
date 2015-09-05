@@ -11,7 +11,7 @@
     <h4><a href="{{ action('ArticlesController@create') }}">Create a new one article</a></h4>
 
     @if(!$articles->isEmpty())
-            <table class="table table-bordered admin-control-table" data-token="{{ csrf_token() }}">
+            <table class="table table-bordered admin-control-table">
 
                 <tr>
                     <th>id</th>
