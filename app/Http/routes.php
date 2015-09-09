@@ -50,13 +50,13 @@ Route::group(['prefix' => 'admin'], function(){
 Route::group(['prefix' => 'api'], function(){
 
     Route::group(['prefix' => 'articles'], function(){
-        Route::get('/', 'ApiController@articles');
+        Route::get('/', 'ArticlesController@index');
         Route::delete('delete', 'ArticlesController@destroy');
         Route::post('restore', 'ArticlesController@restore');
     });
 
     Route::group(['prefix' => 'users'], function(){
-        Route::get('/', 'ApiController@users');
+        Route::get('/', 'UsersController@index');
         Route::delete('delete', 'UsersController@destroy');
         Route::post('restore', 'UsersController@restore');
     });
@@ -67,6 +67,12 @@ Route::group(['prefix' => 'api'], function(){
 
     Route::group(['prefix' => 'comments'], function(){
         Route::delete('delete', 'CommentsController@destroy');
+    });
+
+    Route::group(['prefix' => 'keys'], function(){
+        Route::get('/', 'KeysController@index');
+        Route::post('/create', 'KeysController@store');
+        Route::delete('/delete', 'KeysController@destroy');
     });
 
 });

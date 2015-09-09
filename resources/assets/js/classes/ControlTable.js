@@ -5,8 +5,10 @@ function ControlTable(tableSelector, templateSelector)
 
     this.composeTable = function(data)
     {
-        var template = Handlebars.compile( $(this.template).html() );
-        $(tableSelector).append( template(data));
+        if(this.template.length){
+            var template = Handlebars.compile( $(this.template).html() );
+            $(tableSelector).append( template(data));
+        }
     };
 
     this.registerTemplateHelper = function(helper){

@@ -21,6 +21,16 @@ Model.prototype.all = function(successcb, errorcb)
     });
 };
 
+Model.prototype.create = function(data, successcb, errorcb){
+    $.ajax({
+        url: this.urls.createUrl,
+        type: 'POST',
+        data: data,
+        success:Helpers.safeCallback(successcb),
+        error:Helpers.safeCallback(errorcb)
+    });
+};
+
 Model.prototype.delete = function(data, successcb, errorcb)
 {
     data._method = 'delete';

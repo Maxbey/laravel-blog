@@ -22,7 +22,12 @@ class UsersController extends Controller
         $this->middleware('auth');
         $this->middleware('admin');
 
-        $this->middleware('ajax', ['only' => ['destroy', 'restore']]);
+        $this->middleware('ajax', ['only' => ['index', 'destroy', 'restore']]);
+    }
+
+    public function index()
+    {
+        return User::withTrashed()->get();
     }
 
     /**

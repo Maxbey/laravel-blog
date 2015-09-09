@@ -17,7 +17,7 @@ class RedirectIfNotAjax
     {
         if(!$request->ajax())
         {
-            return back();
+            return response()->view('errors.404', [], 404);
         }
         return $next($request);
     }

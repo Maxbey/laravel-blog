@@ -35,8 +35,13 @@ class ArticlesController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request->ajax())
+        {
+            return Article::withTrashed()->get();
+        }
+
         $articles = Article::latest('published_at')->published()->get();
 
         return view('articles.index')->with('articles', $articles);

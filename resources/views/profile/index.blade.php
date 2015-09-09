@@ -15,7 +15,6 @@
                 <tr>
                     <th>Article</th>
                     <th>Link</th>
-                    <th>Comment</th>
                     <th>Date</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -29,7 +28,6 @@
 
                         <td><a href="@{{urls.articleUrl}}">@{{articleTitle}}</a></td>
                         <td><a href="@{{urls.commentUrl}}">#</a></td>
-                        <td>@{{body}}</td>
                         <td>@{{created_at}}</td>
                         <td><a href="@{{urls.editUrl}}">Edit</a></td>
                         <td><a href="" class="delete-link">Delete</a></td>

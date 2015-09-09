@@ -1,20 +1,28 @@
 <?php namespace App\Repositories\KeysRepository;
 
 
+
 use Redis;
 
 class KeysRepository implements IKeysRepository
 {
+    private $storage;
+
+    public function __construct()
+    {
+        $this->storage = Redis::connection();
+    }
+
     /**
      * Return array of all keys.
      * @return array
      */
-    public function all()
+    public
+    function all()
     {
-        $keys = Redis::get('invitation_keys');
+        $keys = $this->storage->get('invitation_keys');
 
-        if(!$keys)
-        {
+        if (!$keys) {
             return [];
         }
 
@@ -26,7 +34,8 @@ class KeysRepository implements IKeysRepository
      * @param $key
      * @return bool
      */
-    public function exists($key)
+    public
+    function exists($key)
     {
         $keys = $this->all();
 
@@ -38,7 +47,8 @@ class KeysRepository implements IKeysRepository
      * @param $key
      * @return bool
      */
-    public function create($key)
+    public
+    function create($key)
     {
         $keys = $this->all();
         $keys[] = $key;
@@ -51,9 +61,10 @@ class KeysRepository implements IKeysRepository
      * @param array $keys
      * @return bool
      */
-    public function save(array $keys)
+    public
+    function save(array $keys)
     {
-        return Redis::set('invitation_keys', json_encode($keys));
+        return $this->storage->set('invitation_keys', json_encode($keys));
     }
 
 
@@ -62,13 +73,13 @@ class KeysRepository implements IKeysRepository
      * @param $key
      * @return bool
      */
-    public function delete($key)
+    public
+    function delete($key)
     {
         $keys = $this->all();
 
-        $callback = function($value) use($key) {
-            if ($value === $key)
-            {
+        $callback = function ($value) use ($key) {
+            if ($value === $key) {
                 unset($value);
             }
         };
